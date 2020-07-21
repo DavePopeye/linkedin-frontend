@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import Certifications from "./Certifications/Certifications";
 import NavBar from './Components/NavBar/NavBar';
-import SideBar from './Components/ProfilePage/SideBar/SideBar';
+import ProfilePage from './Components/ProfilePage/ProfilePage/ProfilePage';
 import Footer from './Components/Footer/Footer'
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Router>
         <NavBar/>
         <Route path="/davide" exact component={() => <Certifications />} />
-        <Route path="/:id" exact component={SideBar} />
+        <Route path="/:id" exact component={ProfilePage} />
       </Router>
     </>
   );
