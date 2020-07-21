@@ -12,7 +12,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./Certifications.css";
+
 import Link from "../../Images/link.jpg";
+
 
 class Certifications extends React.Component {
   state = {
@@ -44,9 +46,15 @@ class Certifications extends React.Component {
                 <FormControl />
               </Row>
               <Row className="m-2">
+
+                <Form.Group
+                  controlId="formBasicCheckbox"
+                  style={{ cursor: "pointer" }}
+                >
+
                 <Form.Group className="m-1" controlId="formBasicCheckbox">
                   <Form.Check
-                    className="m-1"
+
                     type="checkbox"
                     label="This credential does not expire"
                   />
@@ -54,7 +62,12 @@ class Certifications extends React.Component {
               </Row>
 
               <Row>
+                <Col xs={12} md={6}>
+
+
+              <Row>
                 <Col className="ml-2">
+
                   <Form.Label>Issue Date</Form.Label>
                   <Form.Control as="select" defaultValue="Month">
                     <option>Month</option>
@@ -76,10 +89,18 @@ class Certifications extends React.Component {
                     <option>...</option>
                   </Form.Control>
                 </Col>
+
+                <Col xs={12} md={6}>
+                  <Form.Label>Expiration Date</Form.Label>
+                  <Form.Control as="select" defaultValue="Choose...">
+                    <option>Month</option>
+                    <option>Month</option>
+
                 <Col className="mr-2">
                   <Form.Label>Expiration Date</Form.Label>
                   <Form.Control as="select" defaultValue="Choose...">
                     <option>Month</option>
+
                     <option>January</option>
                     <option>February</option>
                     <option>March</option>
@@ -109,6 +130,29 @@ class Certifications extends React.Component {
                 <FormControl />
               </Row>
             </Modal.Body>
+
+          </Form>
+        </Modal>
+
+        <Jumbotron fluid className="style shadow mt-3">
+          <div className="d-flex align-items-center mb-3">
+            <h2>Licenses & Certifications</h2>
+            <FontAwesomeIcon
+              className="ml-auto mr-3"
+              icon={faPlus}
+              size="xs"
+              color="#0073b1"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                this.setState({
+                  experience: this.emptyExp,
+                  modalShown: true,
+                  editing: false,
+                });
+              }}
+            />
+          </div>
+
             <Modal.Footer>
               <Button
                 type="submit"
@@ -149,6 +193,7 @@ class Certifications extends React.Component {
               />
             </Col>
           </Row>
+
 
           <Container>
             <Row>

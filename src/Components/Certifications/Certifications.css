@@ -1,9 +1,17 @@
 .style {
-  background-color: white !important;
-  text-align: start;
-  width: 50%;
-  margin-left: 20%;
+
+    background-color: white !important;
+    text-align      : start;
+    width           : 50%;
+    margin-left     : 20%;
+
+
 }
+
+.imgStyle {
+    width: 80%;
+}
+
 
 .imgStyle {
   width: 70%;
@@ -25,3 +33,4 @@
   font-weight: normal;
   font-size: 150%;
 }
+
