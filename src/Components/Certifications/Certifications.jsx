@@ -11,8 +11,8 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import "../Certifications/Certifications.css";
-import Link from "../Images/link.jpg";
+import "./Certifications.css";
+import Link from "../../Images/link.jpg";
 
 class Certifications extends React.Component {
   state = {
@@ -143,9 +143,7 @@ class Certifications extends React.Component {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   this.setState({
-                    experience: this.emptyExp,
                     modalShown: true,
-                    editing: false,
                   });
                 }}
               />
