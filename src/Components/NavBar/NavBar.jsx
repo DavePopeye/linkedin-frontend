@@ -42,7 +42,7 @@ class NavBar extends Component {
             )
             let parsedJson = await response.json()
             this.setState({ users: parsedJson.data });
-        console.log(this.state.users)
+        console.log("Navbar users",this.state.users)
         }
         
   render() {
@@ -85,7 +85,7 @@ class NavBar extends Component {
                     ) {
                       return (
                         
-                          <Dropdown.Item key={element._id}><div className='nav-link' to={"/users/" + element.name + element.lastName}>{element.name} {element.lastName}</div></Dropdown.Item>
+                          <Dropdown.Item key={element._id}><Link className='nav-link' to={"/users/" + element._id}>{element.name} {element.lastName}</Link></Dropdown.Item>
                         
                       );
                     }
