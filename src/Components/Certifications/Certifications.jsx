@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import "../Certifications/Certifications.css";
+import "./Certifications.css";
 import Link from "../Images/link.jpg";
 
 class Certifications extends React.Component {
