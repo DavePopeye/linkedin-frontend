@@ -54,7 +54,10 @@ class NavBar extends Component {
       >
         <Container>
           <Navbar.Brand>
-            New LinkedIn
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Linkedin_icon.svg/1200px-Linkedin_icon.svg.png"
+                className="linked"
+              />
           </Navbar.Brand>
           <Form>
             <Dropdown>
