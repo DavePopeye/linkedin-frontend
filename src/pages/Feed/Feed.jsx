@@ -44,7 +44,7 @@ class Feed extends React.Component {
             <MiniProfile user={this.props.user} />
           </Col>
           <Col xs={7}>
-            <NewPost />
+            <NewPost reFetch={this.fetchPosts} />
             {posts.map((post) => (
               <PostItem post={post} />
             ))}

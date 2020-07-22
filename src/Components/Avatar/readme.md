@@ -4,9 +4,10 @@
 ## PROPS
 
 - style : style object,
-- src : defult src
+- src : default src
 - roundedCircle boolean
 - callback => the function that will be invoked if update successfull
+-updateUrl =>
 
 
 ##Example 

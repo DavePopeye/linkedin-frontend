@@ -53,8 +53,10 @@ class Avatar extends React.Component {
         },
       });
       if (res.ok) {
-        this.toggleModal();
-        this.props.callBack && this.props.callBack();
+        setTimeout(() => {
+          this.props.callBack && this.props.callBack();
+          this.toggleModal();
+        }, 1500);
       } else {
       }
     }

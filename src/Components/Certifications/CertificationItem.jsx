@@ -12,7 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import ENDPOINTS from "../../api/endpoints";
 import moment from "moment";
-export default class CertificationItem extends Component {
+import Avatar from "../Avatar/Avatar";
+class CertificationItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,81 +115,95 @@ export default class CertificationItem extends Component {
               Add licenses & certifications
             </Modal.Title>
           </Modal.Header>
-          <Form>
-            <Modal.Body>
-              <Row className="m-2">
-                <Form.Label>Name</Form.Label>
-                <FormControl
-                  name={"name"}
-                  onChange={this.handleChange}
-                  value={certification.name}
+          <Modal.Body>
+            <Row>
+              <Col xs={3}>
+                <Avatar
+                  style={{ width: "100%" }}
+                  src={certification.image}
+                  updateUrl={`https://linkedinbackend.herokuapp.com/certifications/${certification._id}/photo`}
                 />
-              </Row>
-              <Row className="m-2">
-                <Form.Label>Issuing Organization</Form.Label>
-                <FormControl
-                  name={"organization"}
-                  onChange={this.handleChange}
-                  value={certification.organization}
-                />
-              </Row>
-              <Row className="m-2">
-                <Form.Group
-                  controlId="formBasicCheckbox"
-                  style={{ cursor: "pointer" }}
-                >
-                  <Form.Group className="m-1" controlId="formBasicCheckbox">
-                    <Form.Check
-                      name={"canExpire"}
+              </Col>
+              <Col xs={9}>
+                <Form>
+                  <Row className="m-2">
+                    <Form.Label>Name</Form.Label>
+                    <FormControl
+                      name={"name"}
                       onChange={this.handleChange}
-                      value={!!certification.canExpire}
-                      type="checkbox"
-                      label="This credential does not expire"
+                      value={certification.name}
                     />
-                  </Form.Group>
-                </Form.Group>
-              </Row>
-              <Row>
-                <Col className="ml-2">
-                  <Form.Label>Issue Date</Form.Label>
-                  <Form.Control
-                    name={"issueDate"}
-                    onChange={this.handleChange}
-                    value={moment(certification.issueDate).format("YYYY-MM-DD")}
-                    type={"date"}
-                  />
-                </Col>
-                <Col xs={12} md={6}>
-                  <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control
-                    name={"expirationDate"}
-                    onChange={this.handleChange}
-                    value={moment(certification.expirationDate).format(
-                      "YYYY-MM-DD"
-                    )}
-                    type={"date"}
-                    defaultValue="Choose..."
-                  />
-                </Col>
-              </Row>
-              <Row className="m-2">
-                <Form.Label>Credential ID</Form.Label>
-                <FormControl
-                  name={"credentialId"}
-                  onChange={this.handleChange}
-                  value={certification.credentialId}
-                />
-              </Row>
-              <Row className="m-2">
-                <Form.Label>Credential URL</Form.Label>
-                <FormControl
-                  name={"credentialUrl"}
-                  onChange={this.handleChange}
-                  value={certification.credentialUrl}
-                />
-              </Row>
-            </Modal.Body>
-          </Form>
+                  </Row>
+                  <Row className="m-2">
+                    <Form.Label>Issuing Organization</Form.Label>
+                    <FormControl
+                      name={"organization"}
+                      onChange={this.handleChange}
+                      value={certification.organization}
+                    />
+                  </Row>
+                  <Row className="m-2">
+                    <Form.Group
+                      controlId="formBasicCheckbox"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Form.Group className="m-1" controlId="formBasicCheckbox">
+                        <Form.Check
+                          name={"canExpire"}
+                          onChange={this.handleChange}
+                          value={!!certification.canExpire}
+                          type="checkbox"
+                          label="This credential does not expire"
+                        />
+                      </Form.Group>
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Col className="ml-2">
+                      <Form.Label>Issue Date</Form.Label>
+                      <Form.Control
+                        name={"issueDate"}
+                        onChange={this.handleChange}
+                        value={moment(certification.issueDate).format(
+                          "YYYY-MM-DD"
+                        )}
+                        type={"date"}
+                      />
+                    </Col>
+                    <Col xs={12} md={6}>
+                      <Form.Label>Expiration Date</Form.Label>
+                      <Form.Control
+                        name={"expirationDate"}
+                        onChange={this.handleChange}
+                        value={moment(certification.expirationDate).format(
+                          "YYYY-MM-DD"
+                        )}
+                        type={"date"}
+                        defaultValue="Choose..."
+                      />
+                    </Col>
+                  </Row>
+                  <Row className="m-2">
+                    <Form.Label>Credential ID</Form.Label>
+                    <FormControl
+                      name={"credentialId"}
+                      onChange={this.handleChange}
+                      value={certification.credentialId}
+                    />
+                  </Row>
+                  <Row className="m-2">
+                    <Form.Label>Credential URL</Form.Label>
+                    <FormControl
+                      name={"credentialUrl"}
+                      onChange={this.handleChange}
+                      value={certification.credentialUrl}
+                    />
+                  </Row>
+                </Form>
+              </Col>
+            </Row>
+          </Modal.Body>
+
           <Modal.Footer>
             <Button
               type="submit"
@@ -212,3 +227,4 @@ export default class CertificationItem extends Component {
     );
   }
 }
+export default CertificationItem;
