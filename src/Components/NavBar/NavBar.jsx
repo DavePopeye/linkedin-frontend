@@ -5,7 +5,8 @@ import {
   FormControl,
   Form,
   Dropdown,
-  Container
+  Container,
+  Image
 } from "react-bootstrap";
 import {
     AiOutlineHome,
@@ -25,6 +26,7 @@ class NavBar extends Component {
     state = {
         search: "",
         users: [],
+        curentUser:[],
         show: false,
         image :''
       };
@@ -42,10 +44,24 @@ class NavBar extends Component {
             )
             let parsedJson = await response.json()
             this.setState({ users: parsedJson.data });
-        console.log("Navbar users",this.state.users)
+            
+            let user = await fetch(
+              "http://linkedinbackend.herokuapp.com/users/me",
+              {
+                method: "GET",
+                headers: new Headers({
+                  Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+                  "Content-type": "application/json",
+                }),
+              }
+              )
+              let userJSON = await user.json()
+              this.setState({ curentUser: userJSON.data });
+              console.log("Navbar users",this.state.users,this.state.curentUser)
         }
-        
-  render() {
+
+
+      render() {
     return (
         <Navbar
         className="navbar mt-0 fixed-top "
@@ -118,9 +134,11 @@ class NavBar extends Component {
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
             <Nav.Link className="nav-link" to="/">
-              <img src='./photo.png'
-                style={{ borderRadius: "50%", height: "20px", width: "20px" }}
-              ></img>
+              {this.state.curentUser.image ? <Image  src={this.state.curentUser.image}  style={{width: '20px'}} alt={`${this.state.curentUser.name}'s image`} roundedCircle 
+                onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.curentUser.name}`}}/>
+                 :
+                 <Image  src={`https://api.adorable.io/avatars/${this.state.curentUser.name}`}  style={{width: '20px'}} alt="User's picture" roundedCircle />
+              }
               <div style={{ fontSize: "13px" }}>
                 Me
                 <svg

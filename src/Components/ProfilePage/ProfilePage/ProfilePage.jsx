@@ -16,12 +16,6 @@ class Profile extends Component {
           <Row>
             <Col className="col-8">
               <MainJumbotron username={this.props.match.params.id}/>
-              <div id='experiences'>
-                <div id='header'>
-                  <p>Experience</p>
-                  <Link to='/me'><FaPlus/></Link>
-                </div>
-              </div>
             </Col>
             <SideBar />
           </Row>

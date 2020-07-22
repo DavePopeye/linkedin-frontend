@@ -10,9 +10,10 @@ const PageViewer = (data) => {
     <li className='mb-2'>
         <Row>
             <Col className='col-3'>
-            {data.data.image ? <Image  src={data.data.image}  style={{width: '100%'}} alt={`${data.data.name}'s image`} roundedCircle />
+            {data.data.image ? <Image  src={data.data.image}  style={{width: '100%'}} alt={`${data.data.name}'s image`} roundedCircle 
+            onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${data.data.name}`}}/>
                  :
-                 <Image  src='https://via.placeholder.com/150'  style={{width: '100%'}} alt="User's picture" roundedCircle />
+                 <Image  src={`https://api.adorable.io/avatars/${data.data.name}`}  style={{width: '100%'}} alt="User's picture" roundedCircle />
                  }
                
             </Col>

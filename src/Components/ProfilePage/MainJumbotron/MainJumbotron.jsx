@@ -45,8 +45,9 @@ export class MainJumbotron extends Component {
         </div>
         <div id='profileSection'>
           <div style={{cursor: 'pointer'}}>
-            {this.state.data.image ?<img onClick={this.verifyProfile} src={this.state.data.image} alt=""/>
-          : <img onClick={this.verifyProfile} src="https://capenetworks.com/static/images/testimonials/user-icon.svg" alt=""/>
+            {this.state.data.image ?<img className='userImage' onClick={this.verifyProfile} src={this.state.data.image} alt=""
+            onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.data.name}`}}/>
+          : <img onClick={this.verifyProfile} src={`https://api.adorable.io/avatars/${this.state.data.name}`} alt=""/>
           }
             {/* <img src="https://capenetworks.com/static/images/testimonials/user-icon.svg" alt=""/> */}
           </div>
