@@ -20,19 +20,19 @@ import { MdMessage } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import "./NavBar.css";
+import { Link, withRouter } from "react-router-dom";
 
 class NavBar extends Component {
   state = {
     search: "",
     users: [],
-    curentUser:[],
+    curentUser: [],
     show: false,
     image: "",
   };
 
   componentDidMount = () => {
     this.fetchUsers();
-    this.curentUser();
   };
   fetchUsers = async (callback) => {
     let response = await fetch("http://linkedinbackend.herokuapp.com/users", {
@@ -47,22 +47,6 @@ class NavBar extends Component {
     this.setState({ users: parsedJson.data });
     callback && callback();
   };
-
-  curentUser = async()=>{
-  let user = await fetch(
-    "http://linkedinbackend.herokuapp.com/users/me",
-    {
-      method: "GET",
-      headers: new Headers({
-        Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
-        "Content-type": "application/json",
-      }),
-    }
-    )
-    let userJSON = await user.json()
-    this.setState({ curentUser: userJSON.data });
-    console.log("Navbar users",this.state.users,this.state.curentUser)
-}
 
   render() {
     const { user } = this.props;
@@ -118,10 +102,7 @@ class NavBar extends Component {
                       ) {
                         return (
                           <Dropdown.Item key={element._id}>
-                            <div
-                              className="nav-link"
-                              to={"/users/" + element.name + element.lastName}
-                            >
+                            <div>
                               <Row>
                                 <Col xs={3}>
                                   <Image
@@ -168,11 +149,18 @@ class NavBar extends Component {
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
             <Nav.Link className="nav-link" to="/">
-              {this.state.curentUser.image ? <Image  src={this.state.curentUser.image}  style={{width: '20px'}} alt={`${this.state.curentUser.name}'s image`} roundedCircle 
-                onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.curentUser.name}`}}/>
-                 :
-                 <Image  src={`https://api.adorable.io/avatars/${this.state.curentUser.name}`}  style={{width: '20px'}} alt="User's picture" roundedCircle />
-              }
+              <Image
+                src={
+                  user.image || `https://api.adorable.io/avatars/${user.name}`
+                }
+                style={{ width: "20px" }}
+                alt={`${this.state.curentUser.name}'s image`}
+                roundedCircle
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://api.adorable.io/avatars/${user.name}`;
+                }}
+              />
               <div style={{ fontSize: "13px" }}>
                 Me
                 <svg
@@ -193,7 +181,9 @@ class NavBar extends Component {
             ></Nav.Link>
             <Nav.Link className="navIcon" href="#work">
               <BsGrid3X3GapFill style={{ fontSize: "20px" }} />
+
               <div style={{ fontSize: "13px" }}>
+                Work
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -218,4 +208,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

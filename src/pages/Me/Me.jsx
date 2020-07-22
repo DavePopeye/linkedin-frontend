@@ -4,15 +4,12 @@ import Certifications from "../../Components/Certifications/Certifications";
 import Dashboard from "../../Components/Dashboard/Dashboard";
 
 function Me(props) {
+  const { user } = props;
   return (
     <>
-      <Row>
-        <Col xs={8}>
-          <Certifications />
-          <Dashboard />
-        </Col>
-        <Col xs={4}></Col>
-      </Row>
+      <a href={`https://linkedinbackend.herokuapp.com/users/${user._id}/cv`}>
+        GET CV
+      </a>
     </>
   );
 }

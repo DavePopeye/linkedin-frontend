@@ -6,6 +6,8 @@ import AuthLayout from "../layout/AuthLayout";
 import Me from "../pages/Me/Me";
 import Certifications from "../Components/Certifications/Certifications";
 import Feed from "../pages/Feed/Feed";
+import Profile from "../Components/ProfilePage/ProfilePage/ProfilePage";
+import Ubeyt from "../pages/Ubeyt";
 
 export default [
   {
@@ -17,6 +19,18 @@ export default [
   {
     path: "/me",
     component: Me,
+    layout: MainLayout,
+    exact: true,
+  },
+  {
+    path: "/profile/:id",
+    component: Profile,
+    layout: MainLayout,
+    exact: true,
+  },
+  {
+    path: "/ubeyt",
+    component: Ubeyt,
     layout: MainLayout,
     exact: true,
   },
