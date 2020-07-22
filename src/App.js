@@ -4,7 +4,6 @@ import "./App.css";
 import Certifications from "./Certifications/Certifications";
 import NavBar from './Components/NavBar/NavBar';
 import ProfilePage from './Components/ProfilePage/ProfilePage/ProfilePage';
-import Footer from './Components/Footer/Footer'
 
 function App() {
   return (
