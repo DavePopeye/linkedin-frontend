@@ -24,3 +24,11 @@
 .btn-primary:active{
     background-color: #283e4a;
 }
+textarea{
+
+    padding:12px;
+}
+textarea:focus{
+    outline: none;
+
+}
