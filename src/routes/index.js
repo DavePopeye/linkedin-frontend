@@ -1,4 +1,3 @@
-import Home from "../pages/Home";
 import MainLayout from "../layout/MainLayout";
 import SignOut from "../pages/Auth/SignOut";
 import Login from "../pages/Auth/Login";
@@ -6,11 +5,12 @@ import SignUp from "../pages/Auth/SignUp";
 import AuthLayout from "../layout/AuthLayout";
 import Me from "../pages/Me/Me";
 import Certifications from "../Components/Certifications/Certifications";
+import Feed from "../pages/Feed/Feed";
 
 export default [
   {
     path: "/",
-    component: Home,
+    component: Feed,
     layout: MainLayout,
     exact: true,
   },
