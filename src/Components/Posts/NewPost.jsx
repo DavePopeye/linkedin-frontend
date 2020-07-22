@@ -118,8 +118,8 @@ function NewPost(props) {
           <FiEdit style={{ marginRight: "1em" }} />
           Start a Post
           <>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
+            <Modal show={show}>
+              <Modal.Header>
                 <Modal.Title>New Post</Modal.Title>
               </Modal.Header>
               <Modal.Body>

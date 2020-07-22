@@ -1,40 +1,32 @@
 import React from "react";
-import {
-  Button,
-  Col,
-  Form,
-  FormControl,
-  Jumbotron,
-  Modal,
-  Row,
-} from "react-bootstrap";
-import "./Certifications.css";
+import { Button, Col, Form, FormControl, Modal, Row } from "react-bootstrap";
+import "./Experiences.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import CertificationList from "./CertificationList";
+import ExperiencesList from "./ExperiencesList";
 
 /*
- *   Experiences => fetchCertifications
- *       CertificationsList => certifications (as props)
- *       AddNewCertifications fetchCertifications (as props)
+ *   Experiences => fetchexperiences
+ *       experiencesList => experiences (as props)
+ *       AddNewexperiences fetchexperiences (as props)
  *
  * */
-class Certifications extends React.Component {
+class Experiences extends React.Component {
   state = {
-    certifications: [],
+    experiences: [],
     modalShow: false,
     selectedCert: {},
-    certification: {},
+    experience: {},
   };
 
   componentDidMount = () => {
-    this.fetchCertifications();
+    this.fetchexperiences();
   };
 
-  fetchCertifications = async () => {
+  fetchexperiences = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/certifications",
+      "https://linkedinbackend.herokuapp.com/users/me/experiences",
       {
         method: "GET",
         headers: new Headers({
@@ -44,39 +36,33 @@ class Certifications extends React.Component {
       }
     );
     let json = await response.json();
-    this.setState({ certifications: json.data });
+    this.setState({ experiences: json.data });
   };
-  addNewCertification = async () => {
+  addNewexperience = async () => {
     const Authorization = localStorage.getItem("authorization");
-    const { certification } = this.state;
-    const certificate = {
-      ...certification,
-      canExpire: certification.canExpire !== "true",
-    };
-    let res = await fetch(
-      "https://linkedinbackend.herokuapp.com/certifications",
-      {
-        method: "POST",
-        body: JSON.stringify(certificate),
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    const { experience } = this.state;
+
+    let res = await fetch("https://linkedinbackend.herokuapp.com/experiences", {
+      method: "POST",
+      body: JSON.stringify(experience),
+      headers: new Headers({
+        Authorization,
+        "Content-type": "application/json",
+      }),
+    });
     if (res.ok) {
       const { data } = await res.json();
       this.setState({ modalShow: false });
-      this.fetchCertifications();
+      this.fetchexperiences();
     } else {
       const { message } = await res.json();
       alert(message);
     }
   };
   handleChange = (e) => {
-    const { certification } = this.state;
+    const { experience } = this.state;
     this.setState({
-      certification: { ...certification, [e.target.name]: e.target.value },
+      experience: { ...experience, [e.target.name]: e.target.value },
     });
   };
   showModal = (cert) => {
@@ -87,12 +73,12 @@ class Certifications extends React.Component {
   };
 
   render() {
-    const { certification, certifications } = this.state;
+    const { experience, experiences } = this.state;
     return (
       <>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
-            <h4 className="headerStyle">Licenses & Certifications</h4>
+            <h4 className="headerStyle">Experiences</h4>
           </Col>
           <Col className="d-flex align-items-end">
             <FontAwesomeIcon
@@ -105,9 +91,9 @@ class Certifications extends React.Component {
             />
           </Col>
         </Row>
-        {certifications.length > 0 && (
-          <CertificationList
-            certifications={this.state.certifications}
+        {experiences.length > 0 && (
+          <ExperiencesList
+            experiences={this.state.experiences}
             modalShow={this.state.modalShow}
           />
         )}
@@ -121,78 +107,65 @@ class Certifications extends React.Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Add licenses & certifications
+              Add Experience
             </Modal.Title>
           </Modal.Header>
           <Form onSubmit={this.didSubmit}>
             <Modal.Body>
               <Row className="m-2">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Role</Form.Label>
                 <FormControl
-                  name={"name"}
+                  name={"role"}
                   onChange={this.handleChange}
-                  value={certification.name}
+                  value={experience.role}
                 />
               </Row>
               <Row className="m-2">
-                <Form.Label>Issuing Organization</Form.Label>
+                <Form.Label>Company</Form.Label>
                 <FormControl
-                  name={"organization"}
+                  name={"company"}
                   onChange={this.handleChange}
-                  value={certification.organization}
+                  value={experience.company}
                 />
               </Row>
-              <Row className="m-2">
-                <Form.Group
-                  controlId="formBasicCheckbox"
-                  style={{ cursor: "pointer" }}
-                >
-                  <Form.Group className="m-1" controlId="formBasicCheckbox">
-                    <Form.Check
-                      name={"canExpire"}
-                      onChange={this.handleChange}
-                      value={!!certification.canExpire}
-                      type="checkbox"
-                      label="This credential does not expire"
-                    />
-                  </Form.Group>
-                </Form.Group>
-              </Row>
+
               <Row>
                 <Col className="ml-2">
-                  <Form.Label>Issue Date</Form.Label>
+                  <Form.Label>Start Date</Form.Label>
                   <Form.Control
-                    name={"issueDate"}
+                    name={"startDate"}
                     onChange={this.handleChange}
-                    value={certification.issueDate}
+                    value={experience.startDate}
                     type={"date"}
                   />
                 </Col>
                 <Col xs={12} md={6}>
-                  <Form.Label>Expiration Date</Form.Label>
+                  <Form.Label>End Date</Form.Label>
                   <Form.Control
-                    name={"expirationDate"}
+                    name={"endDate"}
                     onChange={this.handleChange}
-                    value={certification.expirationDate}
+                    value={experience.endDate}
                     type={"date"}
                     defaultValue="Choose..."
                   />
                 </Col>
               </Row>
               <Row className="m-2">
-                <Form.Label>Credential ID</Form.Label>
+                <Form.Label>Description</Form.Label>
                 <FormControl
-                  name={"credentialId"}
+                  as={"textarea"}
+                  row={3}
+                  name={"description"}
                   onChange={this.handleChange}
-                  value={certification.credentialId}
+                  value={experience.description}
                 />
               </Row>
               <Row className="m-2">
-                <Form.Label>Credential URL</Form.Label>
+                <Form.Label>Area</Form.Label>
                 <FormControl
-                  name={"credentialUrl"}
+                  name={"area"}
                   onChange={this.handleChange}
-                  value={certification.credentialUrl}
+                  value={experience.area}
                 />
               </Row>
             </Modal.Body>
@@ -210,7 +183,7 @@ class Certifications extends React.Component {
             <Button
               variant="primary"
               className="buttonStyle"
-              onClick={() => this.addNewCertification()}
+              onClick={() => this.addNewexperience()}
             >
               Save
             </Button>
@@ -221,4 +194,4 @@ class Certifications extends React.Component {
   }
 }
 
-export default Certifications;
+export default Experiences;

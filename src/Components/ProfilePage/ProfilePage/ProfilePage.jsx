@@ -4,6 +4,7 @@ import SideBar from "../SideBar/SideBar";
 import { Col, Container, Row } from "react-bootstrap";
 import Certifications from "../../Certifications/Certifications";
 import Dashboard from "../../Dashboard/Dashboard";
+import Experiences from "../../Experiences/Experiences";
 
 class Profile extends Component {
   render() {
@@ -15,6 +16,7 @@ class Profile extends Component {
               {/* {JSON.stringify(this.props)} */}
               <MainJumbotron {...this.props} />
               <Certifications />
+              <Experiences />
               <Dashboard />
             </Col>
             <SideBar />
