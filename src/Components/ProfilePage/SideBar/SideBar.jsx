@@ -9,7 +9,7 @@ class SideBar extends React.Component {
         data :[]
       }
       componentDidMount =async()=>{
-        let response = await fetch(`http://linkedinbackend.herokuapp.com/users/`,{
+        let response = await fetch(`http://linkedinbackend.herokuapp.com/users`,{
           method :'GET',
           headers : new Headers({
             'Authorization': "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
