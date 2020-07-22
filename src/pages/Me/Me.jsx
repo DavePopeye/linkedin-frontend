@@ -1,14 +1,10 @@
 import React from "react";
-import ProfilePage from "../../Components/ProfilePage/ProfilePage/ProfilePage"
-import { Col, Row } from "react-bootstrap";
-import Certifications from "../../Components/Certifications/Certifications";
-import Dashboard from "../../Components/Dashboard/Dashboard";
+import ProfilePage from "../../Components/ProfilePage/ProfilePage/ProfilePage";
 
 function Me(props) {
-  const { user } = props;
   return (
     <>
-      <ProfilePage user={user}/>
+      <ProfilePage {...props} />
     </>
   );
 }

@@ -16,6 +16,8 @@ import { withRouter, Link } from "react-router-dom";
 import "./MainJumbotron.css";
 import { ButtonGroup } from "react-bootstrap/cjs";
 import ENDPOINTS from "../../../api/endpoints";
+import { BsDownload } from "react-icons/bs";
+import Avatar from "../../Avatar/Avatar";
 export class MainJumbotron extends Component {
   state = {
     data: [],
@@ -43,15 +45,11 @@ export class MainJumbotron extends Component {
           <div id="profileSection">
             <div style={{ cursor: "pointer" }}>
               {user.image ? (
-                <img
-                  className="userImage"
-                  onClick={this.verifyProfile}
+                <Avatar
                   src={user.image}
-                  alt=""
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `https://api.adorable.io/avatars/${user.name}`;
-                  }}
+                  roundedCircle
+                  callBack={this.props.reFetch}
+                  updateUrl={`https://linkedinbackend.herokuapp.com/users/${user._id}/photo`}
                 />
               ) : (
                 <img
@@ -83,7 +81,8 @@ export class MainJumbotron extends Component {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href={`${ENDPOINTS.USERS}/${user._id}/cv`}>
-                    Download as PDF
+                    <BsDownload />
+                    Save to PDF
                   </Dropdown.Item>
                   {/* <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
                 <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>*/}
