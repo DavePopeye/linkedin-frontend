@@ -58,10 +58,12 @@ class NavBar extends Component {
       >
         <Container>
           <Navbar.Brand>
-            <img
-              src={require("../../Images/linkedin.png")}
-              className="linked"
-            />
+            <Link to='/'>
+              <img
+                src={require("../../Images/linkedin.png")}
+                className="linked"
+              />
+            </Link>
           </Navbar.Brand>
           <Form>
             <Dropdown>
@@ -128,10 +130,10 @@ class NavBar extends Component {
             </Dropdown>
           </Form>
           <Nav className="ml-auto">
-            <Nav.Link className="nav-link navIcon" to="/">
+            <Link className="nav-link navIcon" to="/">
               <AiOutlineHome style={{ fontSize: "20px" }} />
               <div style={{ fontSize: "13px" }}>Home</div>
-            </Nav.Link>
+            </Link>
             <Nav.Link className="navIcon nav-link" to="/myNetwork">
               <AiOutlineTeam style={{ fontSize: "20px" }} />
               <div style={{ fontSize: "13px" }}>My Network</div>
@@ -148,7 +150,7 @@ class NavBar extends Component {
               <IoMdNotificationsOutline style={{ fontSize: "20px" }} />
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
-            <Nav.Link className="nav-link" to="/">
+            <Link className="nav-link" to="/me">
               <Image
                 src={
                   user.image || `https://api.adorable.io/avatars/${user.name}`
@@ -175,7 +177,7 @@ class NavBar extends Component {
                   <path d="M8.8 10.66L14 5.12a.07.07 0 00-.07-.12H2.07a.07.07 0 00-.07.12l5.2 5.54a1.1 1.1 0 001.6 0z"></path>
                 </svg>
               </div>
-            </Nav.Link>
+            </Link>
             <Nav.Link
               style={{ borderRight: "1px grey solid", height: "57px" }}
             ></Nav.Link>
