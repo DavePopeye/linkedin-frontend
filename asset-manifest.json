@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/fe/static/css/main.946b9f89.chunk.css",
-    "main.js": "/fe/static/js/main.fa0cbd96.chunk.js",
-    "main.js.map": "/fe/static/js/main.fa0cbd96.chunk.js.map",
-    "runtime-main.js": "/fe/static/js/runtime-main.159e69d9.js",
-    "runtime-main.js.map": "/fe/static/js/runtime-main.159e69d9.js.map",
-    "static/css/2.af3c1da9.chunk.css": "/fe/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.1fd9d20e.chunk.js": "/fe/static/js/2.1fd9d20e.chunk.js",
-    "static/js/2.1fd9d20e.chunk.js.map": "/fe/static/js/2.1fd9d20e.chunk.js.map",
-    "index.html": "/fe/index.html",
-    "precache-manifest.609cab6266952cf4958e9086a2366328.js": "/fe/precache-manifest.609cab6266952cf4958e9086a2366328.js",
-    "service-worker.js": "/fe/service-worker.js",
-    "static/css/2.af3c1da9.chunk.css.map": "/fe/static/css/2.af3c1da9.chunk.css.map",
-    "static/css/main.946b9f89.chunk.css.map": "/fe/static/css/main.946b9f89.chunk.css.map",
-    "static/js/2.1fd9d20e.chunk.js.LICENSE.txt": "/fe/static/js/2.1fd9d20e.chunk.js.LICENSE.txt"
+    "main.css": "/linkedin-frontend/static/css/main.946b9f89.chunk.css",
+    "main.js": "/linkedin-frontend/static/js/main.170093b6.chunk.js",
+    "main.js.map": "/linkedin-frontend/static/js/main.170093b6.chunk.js.map",
+    "runtime-main.js": "/linkedin-frontend/static/js/runtime-main.3b535407.js",
+    "runtime-main.js.map": "/linkedin-frontend/static/js/runtime-main.3b535407.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/linkedin-frontend/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.0f627aa4.chunk.js": "/linkedin-frontend/static/js/2.0f627aa4.chunk.js",
+    "static/js/2.0f627aa4.chunk.js.map": "/linkedin-frontend/static/js/2.0f627aa4.chunk.js.map",
+    "index.html": "/linkedin-frontend/index.html",
+    "precache-manifest.1f229e68c7d7bf4f4bf66dff7d6c311a.js": "/linkedin-frontend/precache-manifest.1f229e68c7d7bf4f4bf66dff7d6c311a.js",
+    "service-worker.js": "/linkedin-frontend/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/linkedin-frontend/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.946b9f89.chunk.css.map": "/linkedin-frontend/static/css/main.946b9f89.chunk.css.map",
+    "static/js/2.0f627aa4.chunk.js.LICENSE.txt": "/linkedin-frontend/static/js/2.0f627aa4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.159e69d9.js",
+    "static/js/runtime-main.3b535407.js",
     "static/css/2.af3c1da9.chunk.css",
-    "static/js/2.1fd9d20e.chunk.js",
+    "static/js/2.0f627aa4.chunk.js",
     "static/css/main.946b9f89.chunk.css",
-    "static/js/main.fa0cbd96.chunk.js"
+    "static/js/main.170093b6.chunk.js"
   ]
 }
