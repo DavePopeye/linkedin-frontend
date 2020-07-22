@@ -25,12 +25,14 @@ class NavBar extends Component {
   state = {
     search: "",
     users: [],
+    curentUser:[],
     show: false,
     image: "",
   };
 
   componentDidMount = () => {
     this.fetchUsers();
+    this.curentUser();
   };
   fetchUsers = async (callback) => {
     let response = await fetch("http://linkedinbackend.herokuapp.com/users", {
@@ -45,6 +47,22 @@ class NavBar extends Component {
     this.setState({ users: parsedJson.data });
     callback && callback();
   };
+
+  curentUser = async()=>{
+  let user = await fetch(
+    "http://linkedinbackend.herokuapp.com/users/me",
+    {
+      method: "GET",
+      headers: new Headers({
+        Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+        "Content-type": "application/json",
+      }),
+    }
+    )
+    let userJSON = await user.json()
+    this.setState({ curentUser: userJSON.data });
+    console.log("Navbar users",this.state.users,this.state.curentUser)
+}
 
   render() {
     const { user } = this.props;
@@ -150,15 +168,11 @@ class NavBar extends Component {
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
             <Nav.Link className="nav-link" to="/">
-              <Image
-                src={user.image}
-                roundedCircle
-                style={{
-                  height: "25px",
-                  width: "25px",
-                  border: "1px solid white",
-                }}
-              />
+              {this.state.curentUser.image ? <Image  src={this.state.curentUser.image}  style={{width: '20px'}} alt={`${this.state.curentUser.name}'s image`} roundedCircle 
+                onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.curentUser.name}`}}/>
+                 :
+                 <Image  src={`https://api.adorable.io/avatars/${this.state.curentUser.name}`}  style={{width: '20px'}} alt="User's picture" roundedCircle />
+              }
               <div style={{ fontSize: "13px" }}>
                 Me
                 <svg

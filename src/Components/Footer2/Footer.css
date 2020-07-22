@@ -1,0 +1,33 @@
+/* FOOTER CSS */
+
+  .footer div.list-group-item {
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.3em;
+    padding: 0 !important;
+    border: none;
+    line-height: 1.33333;
+  }
+
+  .footer div.list-group-item:hover {
+    color: #0073b1;
+    cursor: pointer;
+  }
+  
+  .footer .logo {
+    max-width: 8rem;
+   }
+
+   .quest a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    line-height: 1.33333;
+  }
+  .quest a:hover {
+    color: #0073b1 !important;
+    cursor: pointer;
+  }
+
+  /* FOOTER CSS END */
