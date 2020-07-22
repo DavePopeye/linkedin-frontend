@@ -10,6 +10,7 @@ import {
   Navbar,
   Row,
 } from "react-bootstrap";
+import {Link} from 'react-router-dom'
 import {
   AiOutlineHome,
   AiOutlinePlaySquare,
@@ -101,8 +102,15 @@ class NavBar extends Component {
                           .includes(this.state.search)
                       ) {
                         return (
+<<<<<<< HEAD
                           <Dropdown.Item key={element._id}>
                             <div>
+=======
+                          <Dropdown.Item tag={Link} key={element._id} to={"/users/" + element.name + element.lastName}>
+                            <div
+                              className="nav-link"
+                            >
+>>>>>>> c2aaba98a9ae2be7f6a931d6650339d88ff93950
                               <Row>
                                 <Col xs={3}>
                                   <Image

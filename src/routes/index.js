@@ -5,6 +5,7 @@ import SignUp from "../pages/Auth/SignUp";
 import AuthLayout from "../layout/AuthLayout";
 import Me from "../pages/Me/Me";
 import Certifications from "../Components/Certifications/Certifications";
+import ProfilePage from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Feed from "../pages/Feed/Feed";
 import Profile from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Ubeyt from "../pages/Ubeyt";
@@ -55,6 +56,13 @@ export default [
   {
     path: "/davide",
     component: Certifications,
+    layout: MainLayout,
+    exact: true,
+  },
+
+  {
+    path: "/users/:id",
+    component: ProfilePage,
     layout: MainLayout,
     exact: true,
   },
