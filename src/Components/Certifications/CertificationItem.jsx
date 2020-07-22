@@ -1,117 +1,107 @@
-import React from "react";
+import React, { Component } from "react";
 import {
-  Button,
   Col,
+  Row,
+  Container,
+  Modal,
   Form,
   FormControl,
-  Jumbotron,
-  Modal,
-  Row,
+  Button,
 } from "react-bootstrap";
-import "./Certifications.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import CertificationList from "./CertificationList";
-
-/*
- *   Certifications => fetchCertifications
- *       CertificationsList => certifications (as props)
- *       AddNewCertifications fetchCertifications (as props)
- *
- * */
-class Certifications extends React.Component {
-  state = {
-    certifications: [],
-    modalShow: false,
-    selectedCert: {},
-    certification: {},
-  };
-
-  componentDidMount = () => {
-    this.fetchCertifications();
-  };
-
-  fetchCertifications = async () => {
-    const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/certifications",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
-    let json = await response.json();
-    this.setState({ certifications: json.data });
-  };
-  addNewCertification = async () => {
-    const Authorization = localStorage.getItem("authorization");
-    const { certification } = this.state;
-    const certificate = {
-      ...certification,
-      canExpire: certification.canExpire !== "true",
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import ENDPOINTS from "../../api/endpoints";
+import moment from "moment";
+export default class CertificationItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShow: false,
+      editing: false,
+      certification: {},
     };
-    let res = await fetch(
-      "https://linkedinbackend.herokuapp.com/certifications",
-      {
-        method: "POST",
-        body: JSON.stringify(certificate),
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
-    if (res.ok) {
-      const { data } = await res.json();
-      this.setState({ modalShow: false });
-      this.fetchCertifications();
-    } else {
-      const { message } = await res.json();
-      alert(message);
-    }
-  };
+  }
+
+  componentDidMount() {
+    const { certification } = this.props;
+    this.setState({ certification });
+  }
   handleChange = (e) => {
     const { certification } = this.state;
     this.setState({
       certification: { ...certification, [e.target.name]: e.target.value },
     });
+    console.log(e.target.value);
   };
-  showModal = (cert) => {
-    this.setState({
-      modalShow: true,
-      selectedCert: cert,
-    });
+  editCertificate = async () => {
+    const { certification } = this.props;
+    const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(
+      `${ENDPOINTS.CERTIFICATIONS}/${certification._id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(this.state.certification),
+        headers: {
+          Authorization,
+        },
+      }
+    );
+    if (res.ok) {
+      alert("updated");
+      const { data } = await res.json();
+      console.log(data);
+      this.setState({ modalShow: false });
+    } else {
+      alert("not deleted");
+    }
   };
-
+  removeCertificate = async () => {
+    const { certification } = this.props;
+    const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(
+      `${ENDPOINTS.CERTIFICATIONS}/${certification._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization,
+        },
+      }
+    );
+    if (res.ok) {
+      alert("deleted");
+      this.setState({ modalShow: false });
+    } else {
+      alert("not deleted");
+    }
+  };
   render() {
-    const { certification, certifications } = this.state;
+    const { certification } = this.state;
     return (
-      <>
-        <Row className="d-flex align-items-center m-1 my-3 pt-0">
-          <Col xs={6}>
-            <h4 className="headerStyle">Licenses & Certifications</h4>
-          </Col>
-          <Col className="d-flex align-items-end">
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="s"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ modalShow: true })}
-            />
-          </Col>
-        </Row>
-        {certifications.length > 0 && (
-          <CertificationList
-            certifications={this.state.certifications}
-            modalShow={this.state.modalShow}
-          />
-        )}
-
+      <div style={{ marginTop: 20 }}>
+        <Container>
+          <Row>
+            <Col xs={2} className="p-0 ml-3">
+              <img fluid src={certification.image} className="imgStyle" />
+            </Col>
+            <Col xs={7} className="ml-0 pl-0">
+              <h6>{certification.name}</h6>
+              <p>{certification.organization}</p>
+              <p>
+                {certification.issueDate} - {certification.expirationDate}
+              </p>
+            </Col>
+            <Col className="d-flex align-items-start">
+              <FontAwesomeIcon
+                className="ml-auto mr-3"
+                icon={faPencilAlt}
+                size="s"
+                color="#0073b1"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setState({ modalShow: true })}
+              />
+            </Col>
+          </Row>
+        </Container>
         <Modal
           show={this.state.modalShow}
           onHide={() => this.setState({ modalShow: false })}
@@ -124,7 +114,7 @@ class Certifications extends React.Component {
               Add licenses & certifications
             </Modal.Title>
           </Modal.Header>
-          <Form onSubmit={this.didSubmit}>
+          <Form>
             <Modal.Body>
               <Row className="m-2">
                 <Form.Label>Name</Form.Label>
@@ -164,7 +154,7 @@ class Certifications extends React.Component {
                   <Form.Control
                     name={"issueDate"}
                     onChange={this.handleChange}
-                    value={certification.issueDate}
+                    value={moment(certification.issueDate).format("YYYY-MM-DD")}
                     type={"date"}
                   />
                 </Col>
@@ -173,7 +163,9 @@ class Certifications extends React.Component {
                   <Form.Control
                     name={"expirationDate"}
                     onChange={this.handleChange}
-                    value={certification.expirationDate}
+                    value={moment(certification.expirationDate).format(
+                      "YYYY-MM-DD"
+                    )}
                     type={"date"}
                     defaultValue="Choose..."
                   />
@@ -202,23 +194,21 @@ class Certifications extends React.Component {
               type="submit"
               variant="outline-primary"
               className="buttonStyle"
-              onClick={() => this.setState({ modalShow: false })}
+              onClick={() => this.editCertificate()}
             >
-              Cancel
+              Edit
             </Button>
 
             <Button
-              variant="primary"
+              variant="alert"
               className="buttonStyle"
-              onClick={() => this.addNewCertification()}
+              onClick={() => this.removeCertificate()}
             >
-              Save
+              Delete
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
+      </div>
     );
   }
 }
-
-export default Certifications;
