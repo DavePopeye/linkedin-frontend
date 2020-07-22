@@ -4,11 +4,19 @@ import SignOut from "../pages/Auth/SignOut";
 import Login from "../pages/Auth/Login";
 import SignUp from "../pages/Auth/SignUp";
 import AuthLayout from "../layout/AuthLayout";
+import Me from "../pages/Me/Me";
+import Certifications from "../Components/Certifications/Certifications";
 
 export default [
   {
     path: "/",
     component: Home,
+    layout: MainLayout,
+    exact: true,
+  },
+  {
+    path: "/me",
+    component: Me,
     layout: MainLayout,
     exact: true,
   },
@@ -30,6 +38,13 @@ export default [
     layout: MainLayout,
     exact: true,
   },
+  {
+    path: "/davide",
+    component: Certifications,
+    layout: MainLayout,
+    exact: true,
+  },
+
   /*   {
         path:"/davide",
         component:Home,

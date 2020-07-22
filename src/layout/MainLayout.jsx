@@ -2,8 +2,9 @@ import React from "react";
 import NavBar from "../Components/NavBar/NavBar";
 import { Container, Spinner } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import ENDPOINTS from "../api/endpoints";
+
 import Loading from "../Components/Loading/Loading";
+import ENDPOINTS from "../api/endpoints";
 
 class MainLayout extends React.Component {
   constructor(props) {

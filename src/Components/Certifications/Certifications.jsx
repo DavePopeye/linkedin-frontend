@@ -1,21 +1,25 @@
 import React from "react";
 import {
-  Jumbotron,
-  Container,
-  Modal,
   Button,
+  Col,
+  Container,
   Form,
   FormControl,
+  Jumbotron,
+  Modal,
   Row,
-  Col,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./Certifications.css";
 
 import Link from "../../Images/link.jpg";
-
-
+/*
+ *   Certifications => fetchCertifications
+ *       CertificationsList => certifications (as props)
+ *       AddNewCertifications fetchCertifications (as props)
+ *
+ * */
 class Certifications extends React.Component {
   state = {
     modalShown: false,
@@ -46,79 +50,26 @@ class Certifications extends React.Component {
                 <FormControl />
               </Row>
               <Row className="m-2">
-
                 <Form.Group
                   controlId="formBasicCheckbox"
                   style={{ cursor: "pointer" }}
                 >
-
-                <Form.Group className="m-1" controlId="formBasicCheckbox">
-                  <Form.Check
-
-                    type="checkbox"
-                    label="This credential does not expire"
-                  />
+                  <Form.Group className="m-1" controlId="formBasicCheckbox">
+                    <Form.Check
+                      type="checkbox"
+                      label="This credential does not expire"
+                    />
+                  </Form.Group>
                 </Form.Group>
               </Row>
-
-              <Row>
-                <Col xs={12} md={6}>
-
-
               <Row>
                 <Col className="ml-2">
-
                   <Form.Label>Issue Date</Form.Label>
-                  <Form.Control as="select" defaultValue="Month">
-                    <option>Month</option>
-                    <option>January</option>
-                    <option>February</option>
-                    <option>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>August</option>
-                    <option>September</option>
-                    <option>October</option>
-                    <option>November</option>
-                    <option>December</option>
-                  </Form.Control>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Year</option>
-                    <option>...</option>
-                  </Form.Control>
+                  <Form.Control type={"date"} />
                 </Col>
-
                 <Col xs={12} md={6}>
                   <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Month</option>
-                    <option>Month</option>
-
-                <Col className="mr-2">
-                  <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Month</option>
-
-                    <option>January</option>
-                    <option>February</option>
-                    <option>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>August</option>
-                    <option>September</option>
-                    <option>October</option>
-                    <option>November</option>
-                    <option>December</option>
-                  </Form.Control>
-
-                  <Form.Control as="select" defaultValue="Choose...">
-                    <option>Year</option>
-                    <option>...</option>
-                  </Form.Control>
+                  <Form.Control type={"date"} defaultValue="Choose..." />
                 </Col>
               </Row>
               <Row className="m-2">
@@ -130,47 +81,24 @@ class Certifications extends React.Component {
                 <FormControl />
               </Row>
             </Modal.Body>
-
           </Form>
-        </Modal>
+          <Modal.Footer>
+            <Button
+              type="submit"
+              variant="outline-primary"
+              className="buttonStyle"
+            >
+              Save and add another
+            </Button>
 
-        <Jumbotron fluid className="style shadow mt-3">
-          <div className="d-flex align-items-center mb-3">
-            <h2>Licenses & Certifications</h2>
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="xs"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                this.setState({
-                  experience: this.emptyExp,
-                  modalShown: true,
-                  editing: false,
-                });
-              }}
-            />
-          </div>
-
-            <Modal.Footer>
-              <Button
-                type="submit"
-                variant="outline-primary"
-                className="buttonStyle"
-              >
-                Save and add another
-              </Button>
-
-              <Button
-                variant="primary"
-                className="buttonStyle"
-                onClick={() => this.setState({ modalShown: false })}
-              >
-                Save
-              </Button>
-            </Modal.Footer>
-          </Form>
+            <Button
+              variant="primary"
+              className="buttonStyle"
+              onClick={() => this.setState({ modalShown: false })}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
         </Modal>
 
         <Jumbotron fluid className="style shadow p-3">
@@ -193,7 +121,6 @@ class Certifications extends React.Component {
               />
             </Col>
           </Row>
-
 
           <Container>
             <Row>
