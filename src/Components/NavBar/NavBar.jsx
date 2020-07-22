@@ -101,8 +101,8 @@ class NavBar extends Component {
                           .includes(this.state.search)
                       ) {
                         return (
-                          <Dropdown.Item key={element._id}>
-                            <div>
+                          
+                            <Link  to="/me">
                               <Row>
                                 <Col xs={3}>
                                   <Image
@@ -115,8 +115,8 @@ class NavBar extends Component {
                                   {element.name} {element.lastName}
                                 </Col>
                               </Row>
-                            </div>
-                          </Dropdown.Item>
+                            </Link>
+                         
                         );
                       }
                     })

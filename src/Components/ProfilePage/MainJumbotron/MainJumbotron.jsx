@@ -14,20 +14,8 @@ export class MainJumbotron extends Component {
     user : ''
   }
 
-  componentDidMount= async()=> {
-    let response = await fetch(`http://linkedinbackend.herokuapp.com/users/${this.state._id}`,{
-      method :'GET',
-      headers : new Headers({
-        Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
-        'Content-type': "application/json"
-      })
-    })
-    let parsedJson = await response.json()
-    this.setState({data : parsedJson.data})
-    console.log("mainJumbo",parsedJson.data)
-  }
-
   render() {
+    const {user} = this.props;
     return (
       <>
       <Jumbotron>
@@ -39,9 +27,9 @@ export class MainJumbotron extends Component {
         </div>
         <div id='profileSection'>
           <div style={{cursor: 'pointer'}}>
-            {this.state.data.image ?<img className='userImage' onClick={this.verifyProfile} src={this.state.data.image} alt=""
-            onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.data.name}`}}/>
-          : <img onClick={this.verifyProfile} src={`https://api.adorable.io/avatars/${this.state.data.name}`} alt=""/>
+            {user.image ?<img className='userImage' onClick={this.verifyProfile} src={user.image} alt=""
+            onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${user.name}`}}/>
+          : <img onClick={this.verifyProfile} src={`https://api.adorable.io/avatars/${user.name}`} alt=""/>
           }
             {/* <img src="https://capenetworks.com/static/images/testimonials/user-icon.svg" alt=""/> */}
           </div>
@@ -60,9 +48,9 @@ export class MainJumbotron extends Component {
         <div id='profileInfo'>
            <div id='info' >
               <div id='personalInfo'>
-                <p>{this.state.data.name + " " + this.state.data.lastName}</p>
-                <p>{this.state.data.username}</p>
-                <p>{this.state.data.area} -<span> 51 connections </span>-<span> Contact info </span></p>
+                <p>{user.name + " " + user.lastName}</p>
+                <p>{user.username}</p>
+                <p>{user.area} -<span> 51 connections </span>-<span> Contact info </span></p>
               </div>
               <p>Leibniz Universitat Hannover</p>
            </div>
@@ -70,7 +58,7 @@ export class MainJumbotron extends Component {
         <div id='present'>
           <div>
             <p>Open to job opportunities</p>
-            <p>{this.state.data.bio}</p>
+            <p>{user.bio}</p>
             <p>See all details</p>
           </div>
           <IconContext.Provider value={{className : "editIcon"}}>
