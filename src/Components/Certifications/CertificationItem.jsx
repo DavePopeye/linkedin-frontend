@@ -10,17 +10,74 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-
+import ENDPOINTS from "../../api/endpoints";
+import moment from "moment";
 export default class CertificationItem extends Component {
-  state = {
-    modalShow: false,
-    editing: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalShow: false,
+      editing: false,
+      certification: {},
+    };
+  }
 
-  render() {
+  componentDidMount() {
     const { certification } = this.props;
+    this.setState({ certification });
+  }
+  handleChange = (e) => {
+    const { certification } = this.state;
+    this.setState({
+      certification: { ...certification, [e.target.name]: e.target.value },
+    });
+    console.log(e.target.value);
+  };
+  editCertificate = async () => {
+    const { certification } = this.props;
+    const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(
+      `${ENDPOINTS.CERTIFICATIONS}/${certification._id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(this.state.certification),
+        headers: {
+          Authorization,
+        },
+      }
+    );
+    if (res.ok) {
+      alert("updated");
+      const { data } = await res.json();
+      console.log(data);
+      this.setState({ modalShow: false });
+    } else {
+      alert("not deleted");
+    }
+  };
+  removeCertificate = async () => {
+    const { certification } = this.props;
+    const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(
+      `${ENDPOINTS.CERTIFICATIONS}/${certification._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization,
+        },
+      }
+    );
+    if (res.ok) {
+      alert("deleted");
+      this.setState({ modalShow: false });
+    } else {
+      alert("not deleted");
+    }
+  };
+  render() {
+    const { certification } = this.state;
     return (
-      <div>
+      <div style={{ marginTop: 20 }}>
         <Container>
           <Row>
             <Col xs={2} className="p-0 ml-3">
@@ -45,7 +102,6 @@ export default class CertificationItem extends Component {
             </Col>
           </Row>
         </Container>
-
         <Modal
           show={this.state.modalShow}
           onHide={() => this.setState({ modalShow: false })}
@@ -58,15 +114,23 @@ export default class CertificationItem extends Component {
               Add licenses & certifications
             </Modal.Title>
           </Modal.Header>
-          <Form onSubmit={this.didSubmit}>
+          <Form>
             <Modal.Body>
               <Row className="m-2">
                 <Form.Label>Name</Form.Label>
-                <FormControl value={certification.name} />
+                <FormControl
+                  name={"name"}
+                  onChange={this.handleChange}
+                  value={certification.name}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Label>Issuing Organization</Form.Label>
-                <FormControl value={certification.organization} />
+                <FormControl
+                  name={"organization"}
+                  onChange={this.handleChange}
+                  value={certification.organization}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Group
@@ -75,6 +139,9 @@ export default class CertificationItem extends Component {
                 >
                   <Form.Group className="m-1" controlId="formBasicCheckbox">
                     <Form.Check
+                      name={"canExpire"}
+                      onChange={this.handleChange}
+                      value={!!certification.canExpire}
                       type="checkbox"
                       label="This credential does not expire"
                     />
@@ -84,20 +151,41 @@ export default class CertificationItem extends Component {
               <Row>
                 <Col className="ml-2">
                   <Form.Label>Issue Date</Form.Label>
-                  <Form.Control type={"date"} />
+                  <Form.Control
+                    name={"issueDate"}
+                    onChange={this.handleChange}
+                    value={moment(certification.issueDate).format("YYYY-MM-DD")}
+                    type={"date"}
+                  />
                 </Col>
                 <Col xs={12} md={6}>
                   <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control type={"date"} defaultValue="Choose..." />
+                  <Form.Control
+                    name={"expirationDate"}
+                    onChange={this.handleChange}
+                    value={moment(certification.expirationDate).format(
+                      "YYYY-MM-DD"
+                    )}
+                    type={"date"}
+                    defaultValue="Choose..."
+                  />
                 </Col>
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential ID</Form.Label>
-                <FormControl value={certification.credentialId} />
+                <FormControl
+                  name={"credentialId"}
+                  onChange={this.handleChange}
+                  value={certification.credentialId}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential URL</Form.Label>
-                <FormControl value={certification.credentialUrl} />
+                <FormControl
+                  name={"credentialUrl"}
+                  onChange={this.handleChange}
+                  value={certification.credentialUrl}
+                />
               </Row>
             </Modal.Body>
           </Form>
@@ -106,6 +194,7 @@ export default class CertificationItem extends Component {
               type="submit"
               variant="outline-primary"
               className="buttonStyle"
+              onClick={() => this.editCertificate()}
             >
               Edit
             </Button>
@@ -113,7 +202,7 @@ export default class CertificationItem extends Component {
             <Button
               variant="alert"
               className="buttonStyle"
-              onClick={() => this.setState({ modalShow: false })}
+              onClick={() => this.removeCertificate()}
             >
               Delete
             </Button>

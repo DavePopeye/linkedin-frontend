@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Jumbotron, Row } from "react-bootstrap";
 import { FiStar } from "react-icons/fi";
 import { createUseStyles } from "react-jss";
 import Paper from "../ui/Paper/Paper";
@@ -27,7 +27,7 @@ function Dashboard(props) {
   const classes = useStyles();
   return (
     <div>
-      <Paper>
+      <Jumbotron>
         {/* <Card> */}
         <Container>
           <Row>
@@ -79,7 +79,7 @@ function Dashboard(props) {
           <hr className="ml-2 mr-2 " style={{ borderWidth: "medium" }} />
         </Container>
         {/* </Card> */}
-      </Paper>
+      </Jumbotron>
     </div>
   );
 }

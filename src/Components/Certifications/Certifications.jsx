@@ -24,6 +24,7 @@ class Certifications extends React.Component {
     certifications: [],
     modalShow: false,
     selectedCert: {},
+    certification: {},
   };
 
   componentDidMount = () => {
@@ -31,12 +32,13 @@ class Certifications extends React.Component {
   };
 
   fetchCertifications = async () => {
+    const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
       "https://linkedinbackend.herokuapp.com/users/me/certifications",
       {
         method: "GET",
         headers: new Headers({
-          Authorization: "Basic ZGF2aWRlcGFwYUBnbWFpbC5jb206YXV0aDE5ODg=",
+          Authorization,
           "Content-type": "application/json",
         }),
       }
@@ -44,7 +46,39 @@ class Certifications extends React.Component {
     let json = await response.json();
     this.setState({ certifications: json.data });
   };
-
+  addNewCertification = async () => {
+    const Authorization = localStorage.getItem("authorization");
+    const { certification } = this.state;
+    const certificate = {
+      ...certification,
+      canExpire: certification.canExpire !== "true",
+    };
+    let res = await fetch(
+      "https://linkedinbackend.herokuapp.com/certifications",
+      {
+        method: "POST",
+        body: JSON.stringify(certificate),
+        headers: new Headers({
+          Authorization,
+          "Content-type": "application/json",
+        }),
+      }
+    );
+    if (res.ok) {
+      const { data } = await res.json();
+      this.setState({ modalShow: false });
+      this.fetchCertifications();
+    } else {
+      const { message } = await res.json();
+      alert(message);
+    }
+  };
+  handleChange = (e) => {
+    const { certification } = this.state;
+    this.setState({
+      certification: { ...certification, [e.target.name]: e.target.value },
+    });
+  };
   showModal = (cert) => {
     this.setState({
       modalShow: true,
@@ -53,6 +87,7 @@ class Certifications extends React.Component {
   };
 
   render() {
+    const { certification, certifications } = this.state;
     return (
       <>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
@@ -70,10 +105,12 @@ class Certifications extends React.Component {
             />
           </Col>
         </Row>
-        <CertificationList
-          certifications={this.state.certifications}
-          modalShow={this.state.modalShow}
-        />
+        {certifications.length > 0 && (
+          <CertificationList
+            certifications={this.state.certifications}
+            modalShow={this.state.modalShow}
+          />
+        )}
 
         <Modal
           show={this.state.modalShow}
@@ -91,11 +128,19 @@ class Certifications extends React.Component {
             <Modal.Body>
               <Row className="m-2">
                 <Form.Label>Name</Form.Label>
-                <FormControl value={this.state.selectedCert.name} />
+                <FormControl
+                  name={"name"}
+                  onChange={this.handleChange}
+                  value={certification.name}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Label>Issuing Organization</Form.Label>
-                <FormControl />
+                <FormControl
+                  name={"organization"}
+                  onChange={this.handleChange}
+                  value={certification.organization}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Group
@@ -104,6 +149,9 @@ class Certifications extends React.Component {
                 >
                   <Form.Group className="m-1" controlId="formBasicCheckbox">
                     <Form.Check
+                      name={"canExpire"}
+                      onChange={this.handleChange}
+                      value={!!certification.canExpire}
                       type="checkbox"
                       label="This credential does not expire"
                     />
@@ -113,20 +161,39 @@ class Certifications extends React.Component {
               <Row>
                 <Col className="ml-2">
                   <Form.Label>Issue Date</Form.Label>
-                  <Form.Control type={"date"} />
+                  <Form.Control
+                    name={"issueDate"}
+                    onChange={this.handleChange}
+                    value={certification.issueDate}
+                    type={"date"}
+                  />
                 </Col>
                 <Col xs={12} md={6}>
                   <Form.Label>Expiration Date</Form.Label>
-                  <Form.Control type={"date"} defaultValue="Choose..." />
+                  <Form.Control
+                    name={"expirationDate"}
+                    onChange={this.handleChange}
+                    value={certification.expirationDate}
+                    type={"date"}
+                    defaultValue="Choose..."
+                  />
                 </Col>
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential ID</Form.Label>
-                <FormControl />
+                <FormControl
+                  name={"credentialId"}
+                  onChange={this.handleChange}
+                  value={certification.credentialId}
+                />
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential URL</Form.Label>
-                <FormControl />
+                <FormControl
+                  name={"credentialUrl"}
+                  onChange={this.handleChange}
+                  value={certification.credentialUrl}
+                />
               </Row>
             </Modal.Body>
           </Form>
@@ -135,14 +202,15 @@ class Certifications extends React.Component {
               type="submit"
               variant="outline-primary"
               className="buttonStyle"
+              onClick={() => this.setState({ modalShow: false })}
             >
-              Save and add another
+              Cancel
             </Button>
 
             <Button
               variant="primary"
               className="buttonStyle"
-              onClick={() => this.setState({ modalShow: false })}
+              onClick={() => this.addNewCertification()}
             >
               Save
             </Button>
