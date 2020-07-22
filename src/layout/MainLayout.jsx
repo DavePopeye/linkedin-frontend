@@ -50,7 +50,7 @@ class MainLayout extends React.Component {
         ) : (
           <>
             <NavBar user={user} />
-            <Container style={{ paddingTop: 50 }}>
+            <Container style={{ paddingTop: 100 }}>
               {React.cloneElement(this.props.children, {
                 user,
                 reFetch: () => this.fetchActiveUser(),
