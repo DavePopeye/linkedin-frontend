@@ -4,7 +4,7 @@ import {IconContext} from 'react-icons'
 import {FaCamera,FaPencilAlt,FaEye} from 'react-icons/fa'
 import {RiPencilLine} from 'react-icons/ri'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import './MainJumbotron.css'
 export class MainJumbotron extends Component {
   state={
@@ -25,12 +25,6 @@ export class MainJumbotron extends Component {
     let parsedJson = await response.json()
     this.setState({data : parsedJson.data})
     console.log("mainJumbo",parsedJson.data)
-  }
-  verifyProfile = async()=>{
-    console.log(this.state.data)
-    if(this.state.data.username === this.state.user){
-      this.setState({show:true})
-    }
   }
 
   render() {
