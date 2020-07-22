@@ -1,69 +1,73 @@
 import React, { Component } from "react";
 import {
-  Navbar,
-  Nav,
-  FormControl,
-  Form,
-  Dropdown,
+  Col,
   Container,
-  Image
+  Dropdown,
+  Form,
+  FormControl,
+  Image,
+  Nav,
+  Navbar,
+  Row,
 } from "react-bootstrap";
 import {
-    AiOutlineHome,
-    AiOutlineTeam,
-    AiOutlinePlaySquare,
-  } from "react-icons/ai";
-  import { RiBriefcaseLine } from "react-icons/ri";
-  import { MdMessage } from "react-icons/md";
-  import { IoMdNotificationsOutline } from "react-icons/io";
-  import { BsGrid3X3GapFill } from "react-icons/bs";
-import './NavBar.css'
-import {Link} from 'react-router-dom'
-
+  AiOutlineHome,
+  AiOutlinePlaySquare,
+  AiOutlineTeam,
+} from "react-icons/ai";
+import { RiBriefcaseLine } from "react-icons/ri";
+import { MdMessage } from "react-icons/md";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { BsGrid3X3GapFill } from "react-icons/bs";
+import "./NavBar.css";
 
 class NavBar extends Component {
+  state = {
+    search: "",
+    users: [],
+    curentUser:[],
+    show: false,
+    image: "",
+  };
 
-    state = {
-        search: "",
-        users: [],
-        curentUser:[],
-        show: false,
-        image :''
-      };
+  componentDidMount = () => {
+    this.fetchUsers();
+    this.curentUser();
+  };
+  fetchUsers = async (callback) => {
+    let response = await fetch("http://linkedinbackend.herokuapp.com/users", {
+      method: "GET",
+      headers: new Headers({
+        Authorization:
+          "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+        "Content-type": "application/json",
+      }),
+    });
+    let parsedJson = await response.json();
+    this.setState({ users: parsedJson.data });
+    callback && callback();
+  };
 
-    componentDidMount= async()=> {
-        let response = await fetch(
-            "http://linkedinbackend.herokuapp.com/users",
-            {
-                method: "GET",
-                headers: new Headers({
-                    Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
-                    "Content-type": "application/json",
-                }),
-            }
-            )
-            let parsedJson = await response.json()
-            this.setState({ users: parsedJson.data });
-            
-            let user = await fetch(
-              "http://linkedinbackend.herokuapp.com/users/me",
-              {
-                method: "GET",
-                headers: new Headers({
-                  Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
-                  "Content-type": "application/json",
-                }),
-              }
-              )
-              let userJSON = await user.json()
-              this.setState({ curentUser: userJSON.data });
-              console.log("Navbar users",this.state.users,this.state.curentUser)
-        }
+  curentUser = async()=>{
+  let user = await fetch(
+    "http://linkedinbackend.herokuapp.com/users/me",
+    {
+      method: "GET",
+      headers: new Headers({
+        Authorization: "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+        "Content-type": "application/json",
+      }),
+    }
+    )
+    let userJSON = await user.json()
+    this.setState({ curentUser: userJSON.data });
+    console.log("Navbar users",this.state.users,this.state.curentUser)
+}
 
-
-      render() {
+  render() {
+    const { user } = this.props;
     return (
-        <Navbar
+      <Navbar
         className="navbar mt-0 fixed-top "
         style={{ height: "55px" }}
         variant="dark"
@@ -71,17 +75,21 @@ class NavBar extends Component {
         <Container>
           <Navbar.Brand>
             <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Linkedin_icon.svg/1200px-Linkedin_icon.svg.png"
-                className="linked"
-              />
+              src={require("../../Images/linkedin.png")}
+              className="linked"
+            />
           </Navbar.Brand>
           <Form>
             <Dropdown>
-              <FormControl                 
+              <FormControl
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2"
                 style={{ width: "250px", height: "33px" }}
+                onBlur={() => this.setState({ show: false })}
+                onClick={() =>
+                  this.fetchUsers(() => this.setState({ show: true }))
+                }
                 onChange={(e) => {
                   this.setState({ search: e.target.value.toLowerCase() }, () =>
                     console.log(this.state.search)
@@ -92,24 +100,50 @@ class NavBar extends Component {
                     this.setState({ show: false });
                   }
                 }}
-                />
-                <Dropdown.Menu show={this.state.show}>
-                {this.state.show ? (
-                  this.state.users.map((element) => {
-                    if (
-                      element.name.toLowerCase().includes(this.state.search) || element.lastName.toLowerCase().includes(this.state.search)
-                    ) {
-                      return (
-                        
-                          <Dropdown.Item key={element._id}><Link className='nav-link' to={"/users/" + element._id}>{element.name} {element.lastName}</Link></Dropdown.Item>
-                        
-                      );
-                    }
-                  })
-                ) : (
-                  <div>notfound</div>
-                )}
+              />
+              <div style={{ position: "relative", top: "2.5vh" }}>
+                <Dropdown.Menu
+                  style={{ width: "16.5vw" }}
+                  show={this.state.show}
+                >
+                  {this.state.show ? (
+                    this.state.users.map((element) => {
+                      if (
+                        element.name
+                          .toLowerCase()
+                          .includes(this.state.search) ||
+                        element.lastName
+                          .toLowerCase()
+                          .includes(this.state.search)
+                      ) {
+                        return (
+                          <Dropdown.Item key={element._id}>
+                            <div
+                              className="nav-link"
+                              to={"/users/" + element.name + element.lastName}
+                            >
+                              <Row>
+                                <Col xs={3}>
+                                  <Image
+                                    roundedCircle
+                                    style={{ width: "100%" }}
+                                    src={element.image}
+                                  />
+                                </Col>
+                                <Col xs={9}>
+                                  {element.name} {element.lastName}
+                                </Col>
+                              </Row>
+                            </div>
+                          </Dropdown.Item>
+                        );
+                      }
+                    })
+                  ) : (
+                    <Dropdown.Header>Not Found</Dropdown.Header>
+                  )}
                 </Dropdown.Menu>
+              </div>
             </Dropdown>
           </Form>
           <Nav className="ml-auto">
