@@ -101,7 +101,7 @@ class Certifications extends React.Component {
           </Modal.Footer>
         </Modal>
 
-        <Jumbotron fluid className="style shadow p-3">
+        <Jumbotron fluid className="jumbotronStyle shadow p-3">
           <Row className="d-flex align-items-center m-1 my-3 pt-0">
             <Col xs={6}>
               <h4 className="headerStyle">Licenses & Certifications</h4>
