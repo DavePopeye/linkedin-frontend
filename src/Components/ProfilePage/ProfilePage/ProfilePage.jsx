@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Footer from '../../Footer/Footer'
+import Footer from '../../Footer2/Footer'
 import MainJumbotron from "../MainJumbotron/MainJumbotron";
 import SideBar from "../SideBar/SideBar";
 import { Container, Row, Col} from "react-bootstrap";
