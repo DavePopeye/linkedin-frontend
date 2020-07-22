@@ -18,6 +18,7 @@ import { ButtonGroup } from "react-bootstrap/cjs";
 import ENDPOINTS from "../../../api/endpoints";
 import { BsDownload } from "react-icons/bs";
 import Avatar from "../../Avatar/Avatar";
+import Paper from "../../ui/Paper/Paper";
 export class MainJumbotron extends Component {
   state = {
     data: [],
@@ -30,7 +31,7 @@ export class MainJumbotron extends Component {
     const { user } = this.props;
     return (
       <>
-        <Jumbotron>
+        <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
             <img
               src="https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg"
@@ -108,28 +109,30 @@ export class MainJumbotron extends Component {
               <p>Leibniz Universitat Hannover</p>
             </div>
           </div>
-          <div id="present">
-            <div>
-              <p>Open to job opportunities</p>
-              <p>{user.bio}</p>
-              <p>See all details</p>
+          <div>
+            <div id="present">
+              <div>
+                <p>Open to job opportunities</p>
+                <p>{user.bio}</p>
+                <p>See all details</p>
+              </div>
+              <IconContext.Provider value={{ className: "editIcon" }}>
+                <div>
+                  <RiPencilLine />
+                </div>
+              </IconContext.Provider>
             </div>
-            <IconContext.Provider value={{ className: "editIcon" }}>
-              <div>
-                <RiPencilLine />
-              </div>
-            </IconContext.Provider>
+            <div id="presentBelowSection">
+              <IconContext.Provider value={{ className: "eyeIcon" }}>
+                <div>
+                  <FaEye />
+                </div>
+              </IconContext.Provider>
+              <p>All LinkedIn members</p>
+            </div>
           </div>
-          <div id="presentBelowSection">
-            <IconContext.Provider value={{ className: "eyeIcon" }}>
-              <div>
-                <FaEye />
-              </div>
-            </IconContext.Provider>
-            <p>All LinkedIn members</p>
-          </div>
-        </Jumbotron>
-        <div id="about">
+        </Paper>
+        <Paper id="about">
           <div>
             <p style={{ fontSize: "24px" }}>About</p>
             <p>working on Computational methods in Engineering</p>
@@ -139,7 +142,7 @@ export class MainJumbotron extends Component {
               <RiPencilLine />
             </div>
           </IconContext.Provider>
-        </div>
+        </Paper>
 
         <Modal
           show={this.state.show}

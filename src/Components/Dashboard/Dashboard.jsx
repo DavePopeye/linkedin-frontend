@@ -27,7 +27,7 @@ function Dashboard(props) {
   const classes = useStyles();
   return (
     <div>
-      <Jumbotron>
+      <Paper>
         {/* <Card> */}
         <Container>
           <Row>
@@ -79,7 +79,7 @@ function Dashboard(props) {
           <hr className="ml-2 mr-2 " style={{ borderWidth: "medium" }} />
         </Container>
         {/* </Card> */}
-      </Jumbotron>
+      </Paper>
     </div>
   );
 }

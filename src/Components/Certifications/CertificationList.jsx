@@ -6,11 +6,11 @@ import CertificationItem from "./CertificationItem";
 class CertificationList extends React.Component {
   render() {
     return (
-      <Jumbotron fluid className="jumbotronStyle shadow p-3">
+      <div>
         {this.props.certifications.map((certification) => (
           <CertificationItem certification={certification} />
         ))}
-      </Jumbotron>
+      </div>
     );
   }
 }

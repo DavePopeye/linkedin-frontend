@@ -4,6 +4,7 @@ import "./Experiences.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ExperiencesList from "./ExperiencesList";
+import Paper from "../ui/Paper/Paper";
 
 /*
  *   Experiences => fetchexperiences
@@ -75,7 +76,7 @@ class Experiences extends React.Component {
   render() {
     const { experience, experiences } = this.state;
     return (
-      <>
+      <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
             <h4 className="headerStyle">Experiences</h4>
@@ -189,7 +190,7 @@ class Experiences extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
+      </Paper>
     );
   }
 }

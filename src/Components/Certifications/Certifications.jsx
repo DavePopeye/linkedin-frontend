@@ -12,6 +12,7 @@ import "./Certifications.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CertificationList from "./CertificationList";
+import Paper from "../ui/Paper/Paper";
 
 /*
  *   Experiences => fetchCertifications
@@ -89,7 +90,7 @@ class Certifications extends React.Component {
   render() {
     const { certification, certifications } = this.state;
     return (
-      <>
+      <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
             <h4 className="headerStyle">Licenses & Certifications</h4>
@@ -216,7 +217,7 @@ class Certifications extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
+      </Paper>
     );
   }
 }

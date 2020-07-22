@@ -7,11 +7,11 @@ import ExperienceItem from "./ExperienceItem";
 class ExperiencesList extends React.Component {
   render() {
     return (
-      <Jumbotron fluid className="jumbotronStyle shadow p-3">
+      <div>
         {this.props.experiences.map((experience) => (
           <ExperienceItem experience={experience} />
         ))}
-      </Jumbotron>
+      </div>
     );
   }
 }
