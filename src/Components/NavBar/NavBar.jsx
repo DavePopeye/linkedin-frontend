@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import {
-  Navbar,
-  Nav,
-  FormControl,
-  Form,
-  Dropdown,
-  Container,
-  Row,
   Col,
+  Container,
+  Dropdown,
+  Form,
+  FormControl,
   Image,
+  Nav,
+  Navbar,
+  Row,
 } from "react-bootstrap";
 import {
   AiOutlineHome,
-  AiOutlineTeam,
   AiOutlinePlaySquare,
+  AiOutlineTeam,
 } from "react-icons/ai";
 import { RiBriefcaseLine } from "react-icons/ri";
 import { MdMessage } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import "./NavBar.css";
-import { Link } from "react-router-dom";
 
 class NavBar extends Component {
   state = {
@@ -58,7 +57,7 @@ class NavBar extends Component {
         <Container>
           <Navbar.Brand>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Linkedin_icon.svg/1200px-Linkedin_icon.svg.png"
+              src={require("../../Images/linkedin.png")}
               className="linked"
             />
           </Navbar.Brand>

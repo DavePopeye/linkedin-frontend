@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./Certifications.css";
 
-import Link from "../../Images/link.jpg";
+import Link from "../../Images/linkedin.png";
 /*
  *   Certifications => fetchCertifications
  *       CertificationsList => certifications (as props)
