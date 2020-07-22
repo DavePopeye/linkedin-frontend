@@ -17,7 +17,7 @@ import {
 } from "react-icons/ai";
 import { RiBriefcaseLine } from "react-icons/ri";
 import { MdMessage } from "react-icons/md";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoMdNotificationsOutline, IoIosArrowDropdownCircle } from "react-icons/io";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import "./NavBar.css";
 import { Link, withRouter } from "react-router-dom";
@@ -102,20 +102,20 @@ class NavBar extends Component {
                       ) {
                         return (
                           
-                            <Link  to="/me">
-                              <Row>
-                                <Col xs={3}>
-                                  <Image
-                                    roundedCircle
-                                    style={{ width: "100%" }}
-                                    src={element.image}
-                                  />
-                                </Col>
-                                <Col xs={9}>
-                                  {element.name} {element.lastName}
-                                </Col>
-                              </Row>
-                            </Link>
+                            <Dropdown.Item>
+                                <Row>
+                                  <Col xs={3}>
+                                    <Image
+                                      roundedCircle
+                                      style={{ width: "100%" }}
+                                      src={element.image}
+                                    />
+                                  </Col>
+                                  <Col xs={9}>
+                                    {element.name} {element.lastName}
+                                  </Col>
+                                </Row>
+                            </Dropdown.Item>
                          
                         );
                       }
