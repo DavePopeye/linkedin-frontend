@@ -1,79 +1,50 @@
-import React from "react";
+import React, { Component } from "react";
 import {
-  Button,
   Col,
+  Row,
+  Container,
+  Modal,
   Form,
   FormControl,
-  Jumbotron,
-  Modal,
-  Row,
+  Button,
 } from "react-bootstrap";
-import "./Certifications.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import CertificationList from "./CertificationList";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
-/*
- *   Certifications => fetchCertifications
- *       CertificationsList => certifications (as props)
- *       AddNewCertifications fetchCertifications (as props)
- *
- * */
-class Certifications extends React.Component {
+export default class CertificationItem extends Component {
   state = {
-    certifications: [],
     modalShow: false,
-    selectedCert: {},
-  };
-
-  componentDidMount = () => {
-    this.fetchCertifications();
-  };
-
-  fetchCertifications = async () => {
-    let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/certifications",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic ZGF2aWRlcGFwYUBnbWFpbC5jb206YXV0aDE5ODg=",
-          "Content-type": "application/json",
-        }),
-      }
-    );
-    let json = await response.json();
-    this.setState({ certifications: json.data });
-  };
-
-  showModal = (cert) => {
-    this.setState({
-      modalShow: true,
-      selectedCert: cert,
-    });
+    editing: false,
   };
 
   render() {
+    const { certification } = this.props;
     return (
-      <>
-        <Row className="d-flex align-items-center m-1 my-3 pt-0">
-          <Col xs={6}>
-            <h4 className="headerStyle">Licenses & Certifications</h4>
-          </Col>
-          <Col className="d-flex align-items-end">
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="s"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ modalShow: true })}
-            />
-          </Col>
-        </Row>
-        <CertificationList
-          certifications={this.state.certifications}
-          modalShow={this.state.modalShow}
-        />
+      <div>
+        <Container>
+          <Row>
+            <Col xs={2} className="p-0 ml-3">
+              <img fluid src={certification.image} className="imgStyle" />
+            </Col>
+            <Col xs={7} className="ml-0 pl-0">
+              <h6>{certification.name}</h6>
+              <p>{certification.organization}</p>
+              <p>
+                {certification.issueDate} - {certification.expirationDate}
+              </p>
+            </Col>
+            <Col className="d-flex align-items-start">
+              <FontAwesomeIcon
+                className="ml-auto mr-3"
+                icon={faPencilAlt}
+                size="s"
+                color="#0073b1"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setState({ modalShow: true })}
+              />
+            </Col>
+          </Row>
+        </Container>
 
         <Modal
           show={this.state.modalShow}
@@ -91,11 +62,11 @@ class Certifications extends React.Component {
             <Modal.Body>
               <Row className="m-2">
                 <Form.Label>Name</Form.Label>
-                <FormControl value={this.state.selectedCert.name} />
+                <FormControl value={certification.name} />
               </Row>
               <Row className="m-2">
                 <Form.Label>Issuing Organization</Form.Label>
-                <FormControl />
+                <FormControl value={certification.organization} />
               </Row>
               <Row className="m-2">
                 <Form.Group
@@ -122,11 +93,11 @@ class Certifications extends React.Component {
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential ID</Form.Label>
-                <FormControl />
+                <FormControl value={certification.credentialId} />
               </Row>
               <Row className="m-2">
                 <Form.Label>Credential URL</Form.Label>
-                <FormControl />
+                <FormControl value={certification.credentialUrl} />
               </Row>
             </Modal.Body>
           </Form>
@@ -136,21 +107,19 @@ class Certifications extends React.Component {
               variant="outline-primary"
               className="buttonStyle"
             >
-              Save and add another
+              Edit
             </Button>
 
             <Button
-              variant="primary"
+              variant="alert"
               className="buttonStyle"
               onClick={() => this.setState({ modalShow: false })}
             >
-              Save
+              Delete
             </Button>
           </Modal.Footer>
         </Modal>
-      </>
+      </div>
     );
   }
 }
-
-export default Certifications;
