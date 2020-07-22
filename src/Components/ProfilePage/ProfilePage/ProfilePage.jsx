@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import MainJumbotron from "../MainJumbotron/MainJumbotron";
 import SideBar from "../SideBar/SideBar";
-import { Container, Row, Col} from "react-bootstrap";
-import Certifications from "../../Certifications/Certifications"
-import {Link} from 'react-router-dom';
-import {FaPlus} from 'react-icons/fa';
+import { Col, Container, Row } from "react-bootstrap";
+import Certifications from "../../Certifications/Certifications";
 import Dashboard from "../../Dashboard/Dashboard";
 
 class Profile extends Component {
@@ -15,7 +13,7 @@ class Profile extends Component {
           <Row>
             <Col className="col-8">
               {/* {JSON.stringify(this.props)} */}
-              <MainJumbotron user={this.props.user}/>
+              <MainJumbotron {...this.props} />
               <Certifications />
               <Dashboard />
             </Col>
