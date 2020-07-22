@@ -15,6 +15,10 @@ const ENDPOINTS = {
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/certifications`
       : `https://linkedinbackend.herokuapp.com/certifications`,
+  SOCKET:
+    process.env.NODE_ENV === "production"
+      ? `https://linkedinbackend.herokuapp.com`
+      : `https://linkedinbackend.herokuapp.com`,
 };
 
 export default ENDPOINTS;

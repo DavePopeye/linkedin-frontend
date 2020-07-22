@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { animateScroll } from "react-scroll";
 import io from "socket.io-client";
-const socket = io("http://localhost:3001/");
+import ENDPOINTS from "../../api/endpoints";
+const socket = io(ENDPOINTS.SOCKET);
 
 function Chat(props) {
   const useStyles = createUseStyles();
