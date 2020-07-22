@@ -11,7 +11,7 @@ class Profile extends Component {
     return (
       <>
         <NavBar/> 
-        <Container className='mt-5 pt-3'>
+        <Container>
           <Row>
             <Col className="col-8">
               <MainJumbotron username={this.props.match.params.id}/>
