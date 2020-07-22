@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import Loading from "../Components/Loading/Loading";
 import ENDPOINTS from "../api/endpoints";
+import Footer from "../Components/Footer/Footer";
 
 class MainLayout extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class MainLayout extends React.Component {
                 reFetch: () => this.fetchActiveUser(),
               })}
             </Container>
+            <Footer />
           </>
         )}
       </>
