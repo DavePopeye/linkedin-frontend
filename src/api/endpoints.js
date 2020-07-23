@@ -7,6 +7,10 @@ const ENDPOINTS = {
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/experiences`
       : `https://linkedinbackend.herokuapp.com/experiences`,
+  EDUCATIONS:
+    process.env.NODE_ENV === "production"
+      ? `https://linkedinbackend.herokuapp.com/educations`
+      : `https://linkedinbackend.herokuapp.com/educations`,
   POSTS:
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/posts`

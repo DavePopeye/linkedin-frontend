@@ -14,12 +14,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Paper from "../ui/Paper/Paper";
 
-export default class Education extends Component {
+export default class educations extends React.Component {
   state = {
     educations: [],
     modalShow: false,
     selectedCert: {},
-    eudcation: {},
+    education: {},
   };
 
   componentDidMount = () => {
@@ -29,7 +29,7 @@ export default class Education extends Component {
   fetchEducations = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/education",
+      "https://linkedinbackend.herokuapp.com/users/me/educations",
       {
         method: "GET",
         headers: new Headers({
@@ -39,15 +39,16 @@ export default class Education extends Component {
       }
     );
     let json = await response.json();
+    console.log(json);
     this.setState({ educations: json.data });
   };
-  addNeweducation = async () => {
+  addNewEducation = async () => {
     const Authorization = localStorage.getItem("authorization");
-    const { experience } = this.state;
+    const { education } = this.state;
 
-    let res = await fetch("https://linkedinbackend.herokuapp.com/education", {
+    let res = await fetch("https://linkedinbackend.herokuapp.com/educations", {
       method: "POST",
-      body: JSON.stringify(experience),
+      body: JSON.stringify(education),
       headers: new Headers({
         Authorization,
         "Content-type": "application/json",
@@ -71,17 +72,16 @@ export default class Education extends Component {
   showModal = (cert) => {
     this.setState({
       modalShow: true,
-      selectedCert: cert,
     });
   };
 
   render() {
-    const { education, educations } = this.state;
+    const { educations, education } = this.state;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
-            <h4 className="headerStyle">Education</h4>
+            <h4 className="headerStyle">Educations</h4>
           </Col>
           <Col className="d-flex align-items-end">
             <FontAwesomeIcon
@@ -94,9 +94,10 @@ export default class Education extends Component {
             />
           </Col>
         </Row>
-        {education.length > 0 && (
+        {educations.length > 0 && (
           <EducationList
-            eudcations={this.state.educations}
+            reFetch={this.fetchEducations}
+            educations={this.state.educations}
             modalShow={this.state.modalShow}
           />
         )}
@@ -113,30 +114,30 @@ export default class Education extends Component {
               Add Education
             </Modal.Title>
           </Modal.Header>
-          <Form onSubmit={this.didSubmit}>
+          <Form>
             <Modal.Body>
               <Row className="m-2">
                 <Form.Label>School</Form.Label>
                 <FormControl
-                  name={"role"}
+                  name={"school"}
                   onChange={this.handleChange}
-                  value={experience.role}
+                  value={education.school}
                 />
               </Row>
               <Row className="m-2">
                 <Form.Label>Degree</Form.Label>
                 <FormControl
-                  name={"company"}
+                  name={"degree"}
                   onChange={this.handleChange}
-                  value={experience.company}
+                  value={education.degree}
                 />
               </Row>
               <Row className="m-2">
                 <Form.Label>Field of Study</Form.Label>
                 <FormControl
-                  name={"company"}
+                  name={"fieldOfStudy"}
                   onChange={this.handleChange}
-                  value={experience.company}
+                  value={education.fieldOfStudy}
                 />
               </Row>
 
@@ -146,7 +147,7 @@ export default class Education extends Component {
                   <Form.Control
                     name={"startDate"}
                     onChange={this.handleChange}
-                    value={experience.startDate}
+                    value={education.startDate}
                     type={"date"}
                   />
                 </Col>
@@ -155,7 +156,7 @@ export default class Education extends Component {
                   <Form.Control
                     name={"endDate"}
                     onChange={this.handleChange}
-                    value={experience.endDate}
+                    value={education.endDate}
                     type={"date"}
                     defaultValue="Choose..."
                   />
@@ -164,11 +165,20 @@ export default class Education extends Component {
               <Row className="m-2">
                 <Form.Label>Grade</Form.Label>
                 <FormControl
+                  row={3}
+                  name={"grade"}
+                  onChange={this.handleChange}
+                  value={education.grade}
+                />
+              </Row>
+              <Row className="m-2">
+                <Form.Label>Description</Form.Label>
+                <FormControl
                   as={"textarea"}
                   row={3}
                   name={"description"}
                   onChange={this.handleChange}
-                  value={experience.description}
+                  value={education.description}
                 />
               </Row>
             </Modal.Body>
@@ -186,7 +196,7 @@ export default class Education extends Component {
             <Button
               variant="primary"
               className="buttonStyle"
-              onClick={() => this.addNeweducation()}
+              onClick={() => this.addNewEducation()}
             >
               Save
             </Button>

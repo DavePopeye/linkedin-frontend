@@ -40,7 +40,7 @@ class EducationItem extends Component {
   editEducation = async () => {
     const { education } = this.props;
     const Authorization = localStorage.getItem("authorization");
-    const res = await fetch(`${ENDPOINTS.EDUCATION}/${education._id}`, {
+    const res = await fetch(`${ENDPOINTS.EDUCATIONS}/${education._id}`, {
       method: "PUT",
       body: JSON.stringify(this.state.education),
       headers: {
@@ -49,15 +49,17 @@ class EducationItem extends Component {
     });
     if (res.ok) {
       const { data } = await res.json();
-      console.log(data);
+      this.props.reFetch && this.props.reFetch();
       this.setState({ modalShow: false });
     } else {
+      const msg = await res.json();
+      console.log(msg);
     }
   };
   removeEducation = async () => {
     const { education } = this.props;
     const Authorization = localStorage.getItem("authorization");
-    const res = await fetch(`${ENDPOINTS.EDUCATION}/${education._id}`, {
+    const res = await fetch(`${ENDPOINTS.EDUCATIONS}/${education._id}`, {
       method: "DELETE",
       headers: {
         Authorization,
@@ -78,8 +80,8 @@ class EducationItem extends Component {
               <img fluid src={education.image} className="imgStyle" />
             </Col>
             <Col xs={7} className="ml-0 pl-0">
-              <h6>{education.company}</h6>
-              <p>{education.role}</p>
+              <h6>{education.school}</h6>
+              <p>{education.fieldOfStudy}</p>
               <p>
                 {education.startDate} - {education.endDate}
               </p>
@@ -105,7 +107,7 @@ class EducationItem extends Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Edit education
+              Edit Education
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -114,25 +116,25 @@ class EducationItem extends Component {
                 <Avatar
                   style={{ width: "100%" }}
                   src={education.image}
-                  updateUrl={`https://linkedinbackend.herokuapp.com/education/${education._id}/photo`}
+                  updateUrl={`https://linkedinbackend.herokuapp.com/educations/${education._id}/photo`}
                 />
               </Col>
               <Col xs={9}>
                 <Form>
                   <Row className="m-2">
-                    <Form.Label>Role</Form.Label>
+                    <Form.Label>School</Form.Label>
                     <FormControl
-                      name={"role"}
+                      name={"school"}
                       onChange={this.handleChange}
-                      value={education.role}
+                      value={education.school}
                     />
                   </Row>
                   <Row className="m-2">
-                    <Form.Label>Company</Form.Label>
+                    <Form.Label>Field Of Study</Form.Label>
                     <FormControl
-                      name={"company"}
+                      name={"fieldOfStudy"}
                       onChange={this.handleChange}
-                      value={education.company}
+                      value={education.fieldOfStudy}
                     />
                   </Row>
                   <Row>
@@ -167,11 +169,11 @@ class EducationItem extends Component {
                     />
                   </Row>
                   <Row className="m-2">
-                    <Form.Label>Area</Form.Label>
+                    <Form.Label>Degree</Form.Label>
                     <FormControl
-                      name={"area"}
+                      name={"degree"}
                       onChange={this.handleChange}
-                      value={education.area}
+                      value={education.degree}
                     />
                   </Row>
                 </Form>

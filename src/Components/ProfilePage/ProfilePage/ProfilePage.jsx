@@ -6,6 +6,7 @@ import Certifications from "../../Certifications/Certifications";
 import Dashboard from "../../Dashboard/Dashboard";
 import Experiences from "../../Experiences/Experiences";
 import Accomplishments from "../../Accomplishments/Accomplishments";
+import Education from "../../Education/Education";
 
 class Profile extends Component {
   render() {
@@ -17,6 +18,7 @@ class Profile extends Component {
               {/* {JSON.stringify(this.props)} */}
               <MainJumbotron {...this.props} />
               <Dashboard />
+              <Education />
               <Certifications />
               <Experiences />
               <Accomplishments />

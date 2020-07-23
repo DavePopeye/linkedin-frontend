@@ -1,13 +1,11 @@
 import React from "react";
 import EducationItem from "./EducationItem";
-
-// <CertfcatıonItem certıfıcatıon={cert/>
 class EducationList extends React.Component {
   render() {
     return (
       <div>
-        {this.props.education.map((education) => (
-          <EducationItem certification={education} />
+        {this.props.educations.map((education) => (
+          <EducationItem reFetch={this.props.reFetch} education={education} />
         ))}
       </div>
     );
