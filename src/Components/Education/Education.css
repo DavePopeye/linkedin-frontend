@@ -1,0 +1,30 @@
+.jumbotronStyle {
+    background-color: white !important;
+    text-align      : start;
+    width           : 100%;
+}
+
+.imgStyle {
+    width: 80%;
+}
+
+.imgStyle {
+    width        : 70%;
+    padding-right: 10px;
+    margin       : 0px;
+}
+
+.buttonStyle {
+    border-radius  : 0% !important;
+    font-weight    : 500 !important;
+    height         : 30px;
+    display        : flex !important;
+    justify-content: center;
+    align-items    : center;
+}
+
+.headerStyle {
+    color      : rgb(89, 89, 89);
+    font-weight: normal;
+    font-size  : 150%;
+}
