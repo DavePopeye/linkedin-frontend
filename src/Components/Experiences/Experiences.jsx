@@ -92,7 +92,7 @@ class Experiences extends React.Component {
             />
           </Col>
         </Row>
-        {experiences.length > 0 && (
+        {experiences && experiences.length > 0 && (
           <ExperiencesList
             experiences={this.state.experiences}
             modalShow={this.state.modalShow}

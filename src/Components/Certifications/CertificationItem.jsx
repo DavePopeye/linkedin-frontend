@@ -44,6 +44,7 @@ class CertificationItem extends Component {
         body: JSON.stringify(this.state.certification),
         headers: {
           Authorization,
+          "Content-Type": "application/json",
         },
       }
     );
@@ -53,7 +54,8 @@ class CertificationItem extends Component {
       console.log(data);
       this.setState({ modalShow: false });
     } else {
-      alert("not deleted");
+      const msg = await res.json();
+      console.log(msg);
     }
   };
   removeCertificate = async () => {

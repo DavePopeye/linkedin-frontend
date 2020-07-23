@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CertificationList from "./CertificationList";
 import Paper from "../ui/Paper/Paper";
+import ENDPOINTS from "../../api/endpoints";
 
 /*
  *   Experiences => fetchCertifications
@@ -35,7 +36,7 @@ class Certifications extends React.Component {
   fetchCertifications = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/certifications",
+      "http://localhost:3001/users/me/certifications",
       {
         method: "GET",
         headers: new Headers({
@@ -54,17 +55,14 @@ class Certifications extends React.Component {
       ...certification,
       canExpire: certification.canExpire !== "true",
     };
-    let res = await fetch(
-      "https://linkedinbackend.herokuapp.com/certifications",
-      {
-        method: "POST",
-        body: JSON.stringify(certificate),
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    let res = await fetch(ENDPOINTS.CERTIFICATIONS, {
+      method: "POST",
+      body: JSON.stringify(certificate),
+      headers: new Headers({
+        Authorization,
+        "Content-type": "application/json",
+      }),
+    });
     if (res.ok) {
       const { data } = await res.json();
       this.setState({ modalShow: false });
@@ -106,7 +104,7 @@ class Certifications extends React.Component {
             />
           </Col>
         </Row>
-        {certifications.length > 0 && (
+        {certifications && certifications.length > 0 && (
           <CertificationList
             certifications={this.state.certifications}
             modalShow={this.state.modalShow}

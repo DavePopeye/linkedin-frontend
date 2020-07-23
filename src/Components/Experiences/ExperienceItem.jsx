@@ -42,6 +42,7 @@ class ExperienceItem extends Component {
       body: JSON.stringify(this.state.experience),
       headers: {
         Authorization,
+        "Content-Type": "application/json",
       },
     });
     if (res.ok) {

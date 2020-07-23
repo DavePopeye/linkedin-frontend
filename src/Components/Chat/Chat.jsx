@@ -58,7 +58,13 @@ function Chat(props) {
         <div
           ref={messagesBox}
           id="containerElement"
-          style={{ flex: 1, padding: 10, height, overflowY: "scroll" }}
+          style={{
+            flex: 1,
+            padding: 10,
+            height,
+            overflowY: "scroll",
+            background: "#fff",
+          }}
         >
           {messages.map((msg, i) => {
             if (msg.sender === sender) {
