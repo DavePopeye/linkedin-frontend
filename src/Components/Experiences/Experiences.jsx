@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ExperiencesList from "./ExperiencesList";
 import Paper from "../ui/Paper/Paper";
+import { FaFileCsv } from "react-icons/fa";
+import ENDPOINTS from "../../api/endpoints";
 
 /*
  *   Experiences => fetchexperiences
@@ -90,6 +92,19 @@ class Experiences extends React.Component {
               style={{ cursor: "pointer" }}
               onClick={() => this.setState({ modalShow: true })}
             />
+            {experiences && experiences.length > 0 && (
+              <a
+                title={`Download experiences as csv format`}
+                href={`${
+                  ENDPOINTS.EXPERIENCES +
+                  "/" +
+                  experiences[0].createdBy +
+                  "/csv"
+                }`}
+              >
+                <FaFileCsv />
+              </a>
+            )}
           </Col>
         </Row>
         {experiences && experiences.length > 0 && (

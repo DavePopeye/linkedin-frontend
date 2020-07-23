@@ -2,7 +2,7 @@ const ENDPOINTS = {
   USERS:
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/users`
-      : `http://localhost:3001/users`,
+      : `https://linkedinbackend.herokuapp.com/users`,
   EXPERIENCES:
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/experiences`
@@ -14,7 +14,7 @@ const ENDPOINTS = {
   CERTIFICATIONS:
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com/certifications`
-      : `http://localhost:3001/certifications`,
+      : `https://linkedinbackend.herokuapp.com/certifications`,
   SOCKET:
     process.env.NODE_ENV === "production"
       ? `https://linkedinbackend.herokuapp.com`
