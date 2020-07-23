@@ -54,17 +54,14 @@ export class MainJumbotron extends Component {
     if (res.ok) {
       alert("updated");
       const { data } = await res.json();
-      console.log(data);
-      this.setState({ modalShow: false });
+      this.setState({ showModal: false });
     } else {
       alert("not updated");
-      console.log("EDITING USER", this.state.newChange)
     }
   };
 
   render() {
     const { user } = this.props;
-    console.log("User certification",user)
     return (
       <>
 

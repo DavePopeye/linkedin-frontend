@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import './PageViewer.css'
 
 const PageViewer = (data) => {
-    console.log("Page viewer data", data.data)
     return(
     <li className='mb-2'>
         <Row>
@@ -18,11 +17,6 @@ const PageViewer = (data) => {
                
             </Col>
                 <Col className='col-7 d-flex'>
-                    {/* {if (data.data.username === user7){
-                        console.log("same user")
-                    }else{
-                        
-                    }} */}
                     <Link className='nav-link' to={"/users/" + data.data._id}>{data.data.name + " " + data.data.lastName}</Link>
                     <span>{data.data.title}</span>
                 </Col>

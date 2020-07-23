@@ -18,11 +18,9 @@ class SideBar extends React.Component {
         })
         let parsedJson = await response.json()
         this.setState({data : parsedJson.data})
-        console.log("SideBar fetch", parsedJson.data)
       }
 
     render() {
-        console.log(this.state.data.slice(0,6))
         return(
             <Col className='col-4 sideBar'>
                 <div className='mb-3'>
