@@ -87,6 +87,7 @@ class Certifications extends React.Component {
 
   render() {
     const { certification, certifications } = this.state;
+    const { editable } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
@@ -94,6 +95,7 @@ class Certifications extends React.Component {
             <h4 className="headerStyle">Licenses & Certifications</h4>
           </Col>
           <Col className="d-flex align-items-end">
+          {editable && (
             <FontAwesomeIcon
               className="ml-auto mr-3"
               icon={faPlus}
@@ -102,6 +104,7 @@ class Certifications extends React.Component {
               style={{ cursor: "pointer" }}
               onClick={() => this.setState({ modalShow: true })}
             />
+          )}
           </Col>
         </Row>
         {certifications && certifications.length > 0 && (

@@ -20,8 +20,8 @@ class Profile extends Component {
               <MainJumbotron {...this.props} />
               <Dashboard />
               <Education editable={true} />
-              <Certifications />
-              <Experiences />
+              <Certifications editable={true} />
+              <Experiences editable={true}/>
               <Accomplishments />
             </Col>
             <SideBar />
