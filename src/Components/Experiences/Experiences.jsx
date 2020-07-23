@@ -77,13 +77,15 @@ class Experiences extends React.Component {
 
   render() {
     const { experience, experiences } = this.state;
+    const { editable } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
             <h4 className="headerStyle">Experiences</h4>
           </Col>
-          <Col className="d-flex align-items-end">
+          <Col className="d-flex justify-content-end">
+          {editable && (
             <FontAwesomeIcon
               className="ml-auto mr-3"
               icon={faPlus}
@@ -92,6 +94,7 @@ class Experiences extends React.Component {
               style={{ cursor: "pointer" }}
               onClick={() => this.setState({ modalShow: true })}
             />
+          )}
             {experiences && experiences.length > 0 && (
               <a
                 title={`Download experiences as csv format`}

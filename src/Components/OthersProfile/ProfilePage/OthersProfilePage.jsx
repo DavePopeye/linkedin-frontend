@@ -18,11 +18,11 @@ class Profile extends Component {
           <Row>
             <Col className="col-8">
               {/* {JSON.stringify(this.props)} */}
-              <MainJumbotron id={this.props.match.params.id} />
+              <MainJumbotron editable={user._id === id} id={id} />
               <Dashboard id={id} />
               <Education editable={user._id === id} id={id} />
-              <Certifications id={id} />
-              <Experiences id={id} />
+              <Certifications editable={user._id === id} id={id} />
+              <Experiences editable={user._id === id} id={id} />
               <Accomplishments />
             </Col>
             <SideBar />
