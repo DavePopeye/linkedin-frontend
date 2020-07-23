@@ -36,7 +36,9 @@ class Certifications extends React.Component {
   fetchCertifications = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "http://localhost:3001/users/me/certifications",
+      `https://linkedinbackend.herokuapp.com/users/${
+        this.props.id || "me"
+      }/certifications`,
       {
         method: "GET",
         headers: new Headers({
