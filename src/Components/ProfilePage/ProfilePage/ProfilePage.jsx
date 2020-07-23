@@ -10,6 +10,7 @@ import Education from "../../Education/Education";
 
 class Profile extends Component {
   render() {
+    const { user } = this.props;
     return (
       <>
         <Container>
@@ -18,7 +19,7 @@ class Profile extends Component {
               {/* {JSON.stringify(this.props)} */}
               <MainJumbotron {...this.props} />
               <Dashboard />
-              <Education />
+              <Education editable={true} />
               <Certifications />
               <Experiences />
               <Accomplishments />

@@ -28,16 +28,16 @@ export default class educations extends React.Component {
 
   fetchEducations = async () => {
     const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/educations",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    const URL = `https://linkedinbackend.herokuapp.com/users/${
+      this.props.id || "me"
+    }/educations`;
+    let response = await fetch(URL, {
+      method: "GET",
+      headers: new Headers({
+        Authorization,
+        "Content-type": "application/json",
+      }),
+    });
     let json = await response.json();
     console.log(json);
     this.setState({ educations: json.data });
@@ -77,22 +77,25 @@ export default class educations extends React.Component {
 
   render() {
     const { educations, education } = this.state;
+    const { editable } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
             <h4 className="headerStyle">Educations</h4>
           </Col>
-          <Col className="d-flex align-items-end">
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="s"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ modalShow: true })}
-            />
-          </Col>
+          {editable && (
+            <Col className="d-flex align-items-end">
+              <FontAwesomeIcon
+                className="ml-auto mr-3"
+                icon={faPlus}
+                size="s"
+                color="#0073b1"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setState({ modalShow: true })}
+              />
+            </Col>
+          )}
         </Row>
         {educations.length > 0 && (
           <EducationList

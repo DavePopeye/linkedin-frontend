@@ -7,7 +7,7 @@ import {
   DropdownButton,
   Modal,
   Form,
-  Col
+  Col,
 } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { FaCamera, FaPencilAlt, FaEye } from "react-icons/fa";
@@ -29,30 +29,27 @@ export class MainJumbotron extends Component {
     newChange: {},
   };
 
-  componentDidMount (){
+  componentDidMount() {
     const { user } = this.props;
-    this.setState({user})
+    this.setState({ user });
   }
   handleChange = (e) => {
-    const {user} = this.state
+    const { user } = this.state;
     this.setState({
       user: { ...user, [e.target.name]: e.target.value },
     });
   };
 
   editProfile = async () => {
-     const Authorization = localStorage.getItem("authorization");
-    const res = await fetch(
-      `${ENDPOINTS.USERS}/${this.props.user._id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(this.state.user),
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(`${ENDPOINTS.USERS}/${this.props.user._id}`, {
+      method: "PUT",
+      body: JSON.stringify(this.state.user),
+      headers: new Headers({
+        Authorization,
+        "Content-type": "application/json",
+      }),
+    });
     if (res.ok) {
       alert("updated");
       const { data } = await res.json();
@@ -67,7 +64,6 @@ export class MainJumbotron extends Component {
     const { user } = this.state;
     return (
       <>
-
         <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
             <img
@@ -128,7 +124,10 @@ export class MainJumbotron extends Component {
               </Dropdown>
               <IconContext.Provider value={{ className: "editIcon" }}>
                 <div>
-                  <RiPencilLine style={{ cursor: "pointer" }} onClick={() => this.setState({ showModal: true })}/>
+                  <RiPencilLine
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.setState({ showModal: true })}
+                  />
                 </div>
               </IconContext.Provider>
             </div>
@@ -139,8 +138,12 @@ export class MainJumbotron extends Component {
                 <p>{user.name + " " + user.lastName}</p>
                 <p>{user.username}</p>
                 <p>
-                  {user.area ? <> {user.area} - </>: console.log("No user area")}<span> 51 connections </span>-
-                  <span> Contact info </span>
+                  {user.area ? (
+                    <> {user.area} - </>
+                  ) : (
+                    console.log("No user area")
+                  )}
+                  <span> 51 connections </span>-<span> Contact info </span>
                 </p>
               </div>
               <p> Student </p>
@@ -182,6 +185,8 @@ export class MainJumbotron extends Component {
         </Paper>
 
         <Modal
+          centered
+          size={"lg"}
           show={this.state.showModal}
           onHide={() => this.setState({ showModal: false })}
         >
@@ -210,7 +215,6 @@ export class MainJumbotron extends Component {
                 </Form.Group>
               </Form.Row>
               <Form.Row>
-              
                 <Form.Group as={Col} controlId="formGridUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
@@ -224,13 +228,11 @@ export class MainJumbotron extends Component {
                 <Form.Group as={Col} controlId="formGridBirthDate">
                   <Form.Label>Date of birth</Form.Label>
                   <Form.Control
-                        name={"birthDate"}
-                        onChange={this.handleChange}
-                        value={moment(user.birthDate).format(
-                          "YYYY-MM-DD"
-                        )}
-                        type={"date"}
-                      />
+                    name={"birthDate"}
+                    onChange={this.handleChange}
+                    value={moment(user.birthDate).format("YYYY-MM-DD")}
+                    type={"date"}
+                  />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridArea">
@@ -246,12 +248,13 @@ export class MainJumbotron extends Component {
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Biography</Form.Label>
                 <Form.Control
-                    name={"bio"}
-                    onChange={this.handleChange}
-                    value={user.bio}
-                  />
+                  name={"bio"}
+                  as={"textarea"}
+                  rows={4}
+                  onChange={this.handleChange}
+                  value={user.bio}
+                />
               </Form.Group>
-
             </Form>
           </Modal.Body>
           <Modal.Footer>

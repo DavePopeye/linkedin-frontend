@@ -19,32 +19,37 @@ import Avatar from "../../Avatar/Avatar";
 import Paper from "../../ui/Paper/Paper";
 import moment from "moment";
 export class MainJumbotron extends Component {
-  state={
-    data :[],
-    id : this.props.id,
-    show : false,
-    user : ''
-  }
-  componentDidMount (){
+  state = {
+    data: [],
+
+    show: false,
+    user: "",
+  };
+  componentDidMount() {
     this.fetchData();
   }
-  async fetchData(){
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.id !== this.props.id) {
+      this.fetchData();
+    }
+  }
+
+  async fetchData() {
     const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(`${ENDPOINTS.USERS}/${this.state.id}`,{
-      method :'GET',
-      headers : new Headers({
+    let response = await fetch(`${ENDPOINTS.USERS}/${this.props.id}`, {
+      method: "GET",
+      headers: new Headers({
         Authorization,
-        'Content-type': "application/json"
-      })
-    })
-    let parsedJson = await response.json()
-    this.setState({data : parsedJson.data})
+        "Content-type": "application/json",
+      }),
+    });
+    let parsedJson = await response.json();
+    this.setState({ data: parsedJson.data });
   }
 
   render() {
     return (
       <>
-
         <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
             <img
@@ -59,11 +64,23 @@ export class MainJumbotron extends Component {
           </div>
           <div id="profileSection">
             <div style={{ cursor: "pointer" }}>
-            {this.state.data.image ? <Image  src={this.state.data.image} alt={`${this.state.data.name}'s image`} roundedCircle 
-            onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${this.state.data.name}`}}/>
-                 :
-                 <Image  src={`https://api.adorable.io/avatars/${this.state.data.name}`} alt="User's picture" roundedCircle />
-                 }
+              {this.state.data.image ? (
+                <Image
+                  src={this.state.data.image}
+                  alt={`${this.state.data.name}'s image`}
+                  roundedCircle
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = `https://api.adorable.io/avatars/${this.state.data.name}`;
+                  }}
+                />
+              ) : (
+                <Image
+                  src={`https://api.adorable.io/avatars/${this.state.data.name}`}
+                  alt="User's picture"
+                  roundedCircle
+                />
+              )}
             </div>
             <div id="profileButtons">
               <DropdownButton
@@ -85,7 +102,9 @@ export class MainJumbotron extends Component {
                   More..
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href={`${ENDPOINTS.USERS}/${this.state.data._id}/cv`}>
+                  <Dropdown.Item
+                    href={`${ENDPOINTS.USERS}/${this.state.data._id}/cv`}
+                  >
                     <BsDownload />
                     Save to PDF
                   </Dropdown.Item>
@@ -101,8 +120,12 @@ export class MainJumbotron extends Component {
                 <p>{this.state.data.name + " " + this.state.data.lastName}</p>
                 <p>{this.state.data.username}</p>
                 <p>
-                  {this.state.data.area ? <> {this.state.data.area} - </>: console.log("No user area")}<span> 51 connections </span>-
-                  <span> Contact info </span>
+                  {this.state.data.area ? (
+                    <> {this.state.data.area} - </>
+                  ) : (
+                    console.log("No user area")
+                  )}
+                  <span> 51 connections </span>-<span> Contact info </span>
                 </p>
               </div>
               <p> Student </p>
@@ -124,7 +147,7 @@ export class MainJumbotron extends Component {
         <Paper id="about">
           <div>
             <p style={{ fontSize: "24px" }}>About</p>
-            <p>working on Computational methods in Engineering</p>
+            <p>{this.state.data.bio}</p>
           </div>
         </Paper>
       </>

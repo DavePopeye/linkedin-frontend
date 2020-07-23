@@ -9,7 +9,7 @@ import ProfilePage from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Feed from "../pages/Feed/Feed";
 import Profile from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Ubeyt from "../pages/Ubeyt";
-import OthersProfilePage from "../Components/OthersProfile/ProfilePage/OthersProfilePage"
+import OthersProfilePage from "../Components/OthersProfile/ProfilePage/OthersProfilePage";
 
 export default [
   {
@@ -20,7 +20,7 @@ export default [
   },
   {
     path: "/me",
-    component: Me,
+    component: ProfilePage,
     layout: MainLayout,
     exact: true,
   },

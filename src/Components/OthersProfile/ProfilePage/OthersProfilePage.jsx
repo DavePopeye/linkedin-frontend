@@ -6,19 +6,23 @@ import Certifications from "../../Certifications/Certifications";
 import Dashboard from "../../Dashboard/Dashboard";
 import Experiences from "../../Experiences/Experiences";
 import Accomplishments from "../../Accomplishments/Accomplishments";
+import Education from "../../Education/Education";
 
 class Profile extends Component {
   render() {
+    const { user } = this.props;
+    const { id } = this.props.match.params;
     return (
       <>
         <Container>
           <Row>
             <Col className="col-8">
               {/* {JSON.stringify(this.props)} */}
-              <MainJumbotron id={this.props.match.params.id}/>
-              <Dashboard />
-              <Certifications />
-              <Experiences />
+              <MainJumbotron id={this.props.match.params.id} />
+              <Dashboard id={id} />
+              <Education editable={user._id === id} id={id} />
+              <Certifications id={id} />
+              <Experiences id={id} />
               <Accomplishments />
             </Col>
             <SideBar />
