@@ -7,6 +7,7 @@ import {
   DropdownButton,
   Modal,
   Form,
+  Col
 } from "react-bootstrap";
 import { IconContext } from "react-icons";
 import { FaCamera, FaPencilAlt, FaEye } from "react-icons/fa";
@@ -19,18 +20,54 @@ import ENDPOINTS from "../../../api/endpoints";
 import { BsDownload } from "react-icons/bs";
 import Avatar from "../../Avatar/Avatar";
 import Paper from "../../ui/Paper/Paper";
+import moment from "moment";
 export class MainJumbotron extends Component {
   state = {
     data: [],
     _id: this.props.match.params.id,
-    show: false,
+    showModal: false,
     user: "",
+    newChange: {}
+  };
+
+  handleChange = (e) => {
+    const {newChange} = this.state
+    this.setState({
+      newChange: { ...newChange, [e.target.name]: e.target.value },
+    });
+  };
+
+  editProfile = async () => {
+    // const Authorization = localStorage.getItem("authorization");
+    const res = await fetch(
+      `${ENDPOINTS.USERS}/${this.props.user._id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(this.state.newChange),
+        headers: new Headers({
+          Authorization:
+            "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+          "Content-type": "application/json",
+        }),
+      }
+    );
+    if (res.ok) {
+      alert("updated");
+      const { data } = await res.json();
+      console.log(data);
+      this.setState({ modalShow: false });
+    } else {
+      alert("not updated");
+      console.log("EDITING USER", this.state.newChange)
+    }
   };
 
   render() {
     const { user } = this.props;
+    console.log("User certification",user)
     return (
       <>
+
         <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
             <img
@@ -91,7 +128,7 @@ export class MainJumbotron extends Component {
               </Dropdown>
               <IconContext.Provider value={{ className: "editIcon" }}>
                 <div>
-                  <RiPencilLine />
+                  <RiPencilLine style={{ cursor: "pointer" }} onClick={() => this.setState({ showModal: true })}/>
                 </div>
               </IconContext.Provider>
             </div>
@@ -102,11 +139,11 @@ export class MainJumbotron extends Component {
                 <p>{user.name + " " + user.lastName}</p>
                 <p>{user.username}</p>
                 <p>
-                  {user.area} -<span> 51 connections </span>-
+                  {user.area ? <> {user.area} - </>: console.log("No user area")}<span> 51 connections </span>-
                   <span> Contact info </span>
                 </p>
               </div>
-              <p>Leibniz Universitat Hannover</p>
+              <p> at </p>
             </div>
           </div>
           <div>
@@ -145,23 +182,84 @@ export class MainJumbotron extends Component {
         </Paper>
 
         <Modal
-          show={this.state.show}
-          onHide={() => this.setState({ show: false })}
+          show={this.state.showModal}
+          onHide={() => this.setState({ showModal: false })}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Edit picture</Modal.Title>
+            <Modal.Title>Edit profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group>
-                <Form.File label="Example file input" />
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    name={"name"}
+                    onChange={this.handleChange}
+                    value={user.name}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridLastname">
+                  <Form.Label>Lastname</Form.Label>
+                  <Form.Control
+                    name={"lastName"}
+                    onChange={this.handleChange}
+                    value={user.lastName}
+                  />
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+              
+                <Form.Group as={Col} controlId="formGridUsername">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    name={"username"}
+                    onChange={this.handleChange}
+                    value={user.username}
+                  />
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridBirthDate">
+                  <Form.Label>Date of birth</Form.Label>
+                  <Form.Control
+                        name={"birthDate"}
+                        onChange={this.handleChange}
+                        value={moment(user.birthDate).format(
+                          "YYYY-MM-DD"
+                        )}
+                        type={"date"}
+                      />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridArea">
+                  <Form.Label>Area</Form.Label>
+                  <Form.Control
+                    name={"area"}
+                    onChange={this.handleChange}
+                    value={user.area}
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Biography</Form.Label>
+                <Form.Control
+                    name={"bio"}
+                    onChange={this.handleChange}
+                    value={user.bio}
+                  />
               </Form.Group>
+
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="primary"
-              onClick={(e) => this.setState({ show: false })}
+              type="submit"
+              variant="outline-primary"
+              className="buttonStyle"
+              onClick={() => this.editProfile()}
             >
               Save Changes
             </Button>
