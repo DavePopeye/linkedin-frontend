@@ -28,25 +28,29 @@ export class MainJumbotron extends Component {
     showModal: false,
     user: "",
     newChange: {}
+    
   };
 
+  componentDidMount (){
+    const { user } = this.props;
+    this.setState({user})
+  }
   handleChange = (e) => {
-    const {newChange} = this.state
+    const {user} = this.state
     this.setState({
-      newChange: { ...newChange, [e.target.name]: e.target.value },
+      user: { ...user, [e.target.name]: e.target.value },
     });
   };
 
   editProfile = async () => {
-    // const Authorization = localStorage.getItem("authorization");
+     const Authorization = localStorage.getItem("authorization");
     const res = await fetch(
       `${ENDPOINTS.USERS}/${this.props.user._id}`,
       {
         method: "PUT",
-        body: JSON.stringify(this.state.newChange),
+        body: JSON.stringify(this.state.user),
         headers: new Headers({
-          Authorization:
-            "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
+          Authorization,
           "Content-type": "application/json",
         }),
       }
@@ -56,12 +60,13 @@ export class MainJumbotron extends Component {
       const { data } = await res.json();
       this.setState({ showModal: false });
     } else {
-      alert("not updated");
+      const m = await res.json();
+      console.log(m);
     }
   };
 
   render() {
-    const { user } = this.props;
+    const { user } = this.state;
     return (
       <>
 
