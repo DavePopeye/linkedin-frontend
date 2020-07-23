@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col , Image} from 'react-bootstrap';
 import { FaUserPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './PageViewer.css'
 
 const PageViewer = (data) => {
@@ -29,4 +29,4 @@ const PageViewer = (data) => {
     )
 }
 
-export default PageViewer;
+export default withRouter (PageViewer);

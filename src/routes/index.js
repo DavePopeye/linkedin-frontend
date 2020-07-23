@@ -9,6 +9,7 @@ import ProfilePage from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Feed from "../pages/Feed/Feed";
 import Profile from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Ubeyt from "../pages/Ubeyt";
+import OthersProfilePage from "../Components/OthersProfile/ProfilePage/OthersProfilePage"
 
 export default [
   {
@@ -62,7 +63,7 @@ export default [
 
   {
     path: "/users/:id",
-    component: ProfilePage,
+    component: OthersProfilePage,
     layout: MainLayout,
     exact: true,
   },

@@ -12,7 +12,6 @@ import {
 import { IconContext } from "react-icons";
 import { FaCamera, FaPencilAlt, FaEye } from "react-icons/fa";
 import { RiPencilLine } from "react-icons/ri";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { withRouter, Link } from "react-router-dom";
 import "./MainJumbotron.css";
 import { ButtonGroup } from "react-bootstrap/cjs";
@@ -27,8 +26,7 @@ export class MainJumbotron extends Component {
     _id: this.props.match.params.id,
     showModal: false,
     user: "",
-    newChange: {}
-    
+    newChange: {},
   };
 
   componentDidMount (){
@@ -145,7 +143,7 @@ export class MainJumbotron extends Component {
                   <span> Contact info </span>
                 </p>
               </div>
-              <p> at </p>
+              <p> Student </p>
             </div>
           </div>
           <div>
