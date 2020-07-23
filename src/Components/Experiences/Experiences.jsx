@@ -29,7 +29,9 @@ class Experiences extends React.Component {
   fetchexperiences = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/experiences",
+      `https://linkedinbackend.herokuapp.com/users/${
+        this.props.id || "me"
+      }/experiences`,
       {
         method: "GET",
         headers: new Headers({
