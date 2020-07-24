@@ -27,7 +27,8 @@ import { BsConeStriped } from "react-icons/bs";
 
 function PostItem(props) {
   const [show, setShow] = useState(false);
-  const [text, setText] = useState(props.post.text || "");
+  const [text, setTexts] = useState(props.post.text || "");
+  const [comment, setText] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const useStyles = createUseStyles((theme) => ({
@@ -120,6 +121,29 @@ function PostItem(props) {
       handleClose();
     }
   };
+
+  const submitComment = async () => {
+    const Authorization = localStorage.getItem("authorization");
+    const data = new FormData();
+    data.append("post", { text });
+    let res = await fetch(`${ENDPOINTS.POSTS}/${props.post._id}/coment`, {
+      method: "POST",
+      headers: {
+        Authorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) {
+      props.reFetch && props.reFetch();
+      handleClose();
+      setText("");
+    } else {
+      props.reFetch && props.reFetch();
+      handleClose();
+    }
+  };
+
   return (
     <div>
       <Modal show={show} onHide={handleClose} animation={false}>
@@ -222,8 +246,8 @@ function PostItem(props) {
                 </div>
                 <Form className='mt-2'>
                   <Form.Group controlId="exampleForm.ControlTextarea1" style={{position:'relative'}}>
-                    <MdSend style={{position:'absolute', right:'5px', top:'35%', fontSize:'25px', cursor:'pointer'}} />
-                    <Form.Control as="textarea" rows="3" placeholder='Add new comment here of max 200 characters' style={{ borderRadius:'15px'}} maxLength='200' />
+                    <MdSend style={{position:'absolute', right:'5px', top:'35%', fontSize:'25px', cursor:'pointer'}}/>
+                    <Form.Control value={comment} onChange={(e) => setText(e.target.value)} as="textarea" rows="3" placeholder='Add new comment here of max 200 characters' style={{ borderRadius:'15px'}} maxLength='200' />
                   </Form.Group>
                 </Form>
             </Card.Body>
