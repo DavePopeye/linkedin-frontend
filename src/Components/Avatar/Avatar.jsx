@@ -81,12 +81,7 @@ class Avatar extends React.Component {
           type={"file"}
           hidden
         />
-        <Image
-          {...this.props}
-          style={{ objectFit: "cover" }}
-          src={src}
-          onClick={this.toggleModal}
-        />
+        <Image {...this.props} src={src} onClick={this.toggleModal} />
         <Modal centered show={modal} onHide={this.toggleModal}>
           <Modal.Body
             style={{

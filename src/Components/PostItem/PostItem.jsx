@@ -23,9 +23,34 @@ import ENDPOINTS from "../../api/endpoints";
 
 function PostItem(props) {
   const [show, setShow] = useState(false);
+  const [file, setFile] = useState();
+  const [src, setSrc] = useState("");
   const [text, setText] = useState(props.post.text || "");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const input = React.createRef();
+  const handleFileClick = () => {
+    input.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const { files } = e.target;
+    const file = files[0];
+    if (file.type.includes("image")) {
+      encodeImageFileAsURL(file, (src) => {
+        setFile(file);
+        setSrc(src);
+      });
+      await putPhoto(src);
+    }
+  };
+  const encodeImageFileAsURL = (file, callback) => {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
   const useStyles = createUseStyles((theme) => ({
     buttons: {
       flex: 0.5,
@@ -97,6 +122,20 @@ function PostItem(props) {
       handleClose();
     }
   };
+  const putPhoto = async (src) => {
+    const formData = new FormData();
+    const Authorization = localStorage.getItem("authorization");
+    formData.append("photo", file);
+    let res = await fetch(`${ENDPOINTS.POSTS}/${props.post._id}/photo`, {
+      method: "PUT",
+      body: formData,
+      headers: {
+        Authorization,
+      },
+    });
+    let msg = await res.json();
+    console.log(msg);
+  };
   const deletePost = async () => {
     const Authorization = localStorage.getItem("authorization");
     const data = new FormData();
@@ -130,11 +169,23 @@ function PostItem(props) {
             as={"textarea"}
             className={classes.textArea}
           />
+          {src && (
+            <Image style={{ objectFit: "cover", width: "100%" }} src={src} />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <div className={classes.footer}>
             <div className={classes.buttons}>
-              <MdPhotoCamera style={{ fontSize: 20, marginRight: "1em" }} />
+              <input
+                ref={input}
+                onChange={handleFileChange}
+                type={"file"}
+                hidden
+              />
+              <MdPhotoCamera
+                onClick={handleFileClick}
+                style={{ fontSize: 20, marginRight: "1em" }}
+              />
               <FiVideo style={{ fontSize: 20, marginRight: "1em" }} />
               <GrDocument style={{ fontSize: 16, marginRight: "1em" }} />
             </div>

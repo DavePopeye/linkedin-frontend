@@ -83,7 +83,12 @@ class CertificationItem extends Component {
         <Container>
           <Row>
             <Col xs={2} className="p-0 ml-3">
-              <img fluid src={certification.image} className="imgStyle" />
+              <img
+                fluid
+                src={certification.image}
+                style={{ width: "100%", objectFit: "cover" }}
+                className="imgStyle"
+              />
             </Col>
             <Col xs={7} className="ml-0 pl-0">
               <h6>{certification.name}</h6>
@@ -131,7 +136,7 @@ class CertificationItem extends Component {
             <Row>
               <Col xs={3}>
                 <Avatar
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", objectFit: "cover" }}
                   src={certification.image}
                   updateUrl={`https://linkedinbackend.herokuapp.com/certifications/${certification._id}/photo`}
                 />

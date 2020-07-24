@@ -53,16 +53,16 @@ class Feed extends React.Component {
     return (
       <>
         <Row>
-          <Col xs={3}>
+          <Col xs={12} md={3} lg={3}>
             <MiniProfile user={this.props.user} />
           </Col>
-          <Col xs={7}>
+          <Col xs={12} md={7} lg={7}>
             <NewPostForm reFetch={this.fetchPosts} />
             {posts.map((post) => (
               <PostItem user={user} reFetch={this.fetchPosts} post={post} />
             ))}
           </Col>
-          <Col xs={2}></Col>
+          <Col xs={12} md={2} lg={2}></Col>
         </Row>
       </>
     );

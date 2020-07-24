@@ -78,7 +78,12 @@ class EducationItem extends Component {
         <Container>
           <Row>
             <Col xs={2} className="p-0 ml-3">
-              <img fluid src={education.image} className="imgStyle" />
+              <img
+                fluid
+                src={education.image}
+                className="imgStyle"
+                style={{ width: "100%", objectFit: "cover" }}
+              />
             </Col>
             <Col xs={7} className="ml-0 pl-0">
               <h6>{education.school}</h6>
@@ -116,7 +121,7 @@ class EducationItem extends Component {
             <Row>
               <Col xs={3}>
                 <Avatar
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", objectFit: "cover" }}
                   src={education.image}
                   updateUrl={`https://linkedinbackend.herokuapp.com/educations/${education._id}/photo`}
                 />

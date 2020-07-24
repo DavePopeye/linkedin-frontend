@@ -74,7 +74,12 @@ class ExperienceItem extends Component {
         <Container>
           <Row>
             <Col xs={2} className="p-0 ml-3">
-              <img fluid src={experience.image} className="imgStyle" />
+              <img
+                fluid
+                src={experience.image}
+                className="imgStyle"
+                style={{ width: "100%", objectFit: "cover" }}
+              />
             </Col>
             <Col xs={7} className="ml-0 pl-0">
               <h6>{experience.company}</h6>
@@ -112,7 +117,7 @@ class ExperienceItem extends Component {
             <Row>
               <Col xs={3}>
                 <Avatar
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", objectFit: "cover" }}
                   src={experience.image}
                   updateUrl={`https://linkedinbackend.herokuapp.com/experiences/${experience._id}/photo`}
                 />
