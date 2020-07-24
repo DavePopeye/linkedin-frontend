@@ -173,17 +173,6 @@ export class MainJumbotron extends Component {
             </div>
           </div>
         </Paper>
-        <Paper id="about">
-          <div>
-            <p style={{ fontSize: "24px" }}>About</p>
-            <p>working on Computational methods in Engineering</p>
-          </div>
-          <IconContext.Provider value={{ className: "editIcon" }}>
-            <div>
-              <RiPencilLine />
-            </div>
-          </IconContext.Provider>
-        </Paper>
 
         <Modal
           centered
