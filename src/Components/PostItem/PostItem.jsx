@@ -1,14 +1,12 @@
 import React from "react";
 import Paper from "../ui/Paper/Paper";
-import { Accordion, Col, Row, Card, Image } from "react-bootstrap";
-import { FiMoreHorizontal } from "react-icons/fi";
+import { Accordion, Card, Col, Image, Row } from "react-bootstrap";
+import { FiMoreHorizontal, FiSend } from "react-icons/fi";
 import Person from "../Person/Person";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { RiShareForwardLine } from "react-icons/ri";
 import { createUseStyles } from "react-jss";
-import { FiSend } from "react-icons/fi";
-const faker = require("faker");
 
 function PostItem({ post }) {
   const useStyles = createUseStyles((theme) => ({
