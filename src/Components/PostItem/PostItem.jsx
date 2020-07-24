@@ -7,8 +7,10 @@ import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { RiShareForwardLine } from "react-icons/ri";
 import { createUseStyles } from "react-jss";
+import Coments from "../Coments/Coments"
 
 function PostItem({ post }) {
+
   const useStyles = createUseStyles((theme) => ({
     btn: {
       color: "grey",
@@ -23,6 +25,8 @@ function PostItem({ post }) {
     },
   }));
   const classes = useStyles();
+    
+
   return (
     <div>
       <Paper>
@@ -77,12 +81,10 @@ function PostItem({ post }) {
           </Row>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <>
-                <Row>new comment</Row>
-                <div style={{ maxHeight: 400, overflowY: "scroll" }}>
-                  comments
-                </div>
-              </>
+            {/* {this.state.data.map(function (data, i) {
+              return <Coments comments={post.comments} key={i} />;
+            })} */}
+              <Coments comments={post.comments} />
             </Card.Body>
           </Accordion.Collapse>
         </Accordion>
