@@ -16,7 +16,7 @@ const PageViewer = (data) => {
                  }
                
             </Col>
-                <Col className='col-7 d-flex'>
+                <Col className='col-7'>
                     <Link className='nav-link' to={"/users/" + data.data._id}>{data.data.name + " " + data.data.lastName}</Link>
                     <span>{data.data.title}</span>
                 </Col>
