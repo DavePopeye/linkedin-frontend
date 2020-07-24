@@ -7,6 +7,7 @@ import Dashboard from "../../Dashboard/Dashboard";
 import Experiences from "../../Experiences/Experiences";
 import Accomplishments from "../../Accomplishments/Accomplishments";
 import Education from "../../Education/Education";
+import About from "../../About/About";
 
 class Profile extends Component {
   render() {
@@ -18,10 +19,11 @@ class Profile extends Component {
             <Col className="col-8">
               {/* {JSON.stringify(this.props)} */}
               <MainJumbotron {...this.props} />
+              <About />
               <Dashboard />
               <Education editable={true} />
               <Certifications editable={true} />
-              <Experiences editable={true}/>
+              <Experiences editable={true} />
               <Accomplishments />
             </Col>
             <SideBar />
