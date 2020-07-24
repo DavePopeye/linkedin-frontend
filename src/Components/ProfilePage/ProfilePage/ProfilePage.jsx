@@ -19,7 +19,7 @@ class Profile extends Component {
             <Col className="col-8">
               {/* {JSON.stringify(this.props)} */}
               <MainJumbotron {...this.props} />
-              <About />
+              <About user={user} />
               <Dashboard />
               <Education educations={user.educations} editable={true} />
               <Certifications

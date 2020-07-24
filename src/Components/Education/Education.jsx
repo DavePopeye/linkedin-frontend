@@ -82,6 +82,7 @@ export default class Educations extends React.Component {
         </Row>
         {educations && (
           <EducationList
+            editable={editable}
             reFetch={this.props.reFetch}
             educations={educations}
             modalShow={this.state.modalShow}

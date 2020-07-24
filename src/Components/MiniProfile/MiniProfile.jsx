@@ -42,6 +42,7 @@ function MiniProfile(props) {
                 backgroundColor: "#C6B273",
                 paddingTop: "5px",
                 height: "95px",
+                objectFit: "cover",
               }}
               variant="top"
               src={props.user.cover}
