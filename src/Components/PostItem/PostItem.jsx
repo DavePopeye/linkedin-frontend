@@ -1,16 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "../ui/Paper/Paper";
-import { Accordion, Card, Col, Image, Row } from "react-bootstrap";
-import { FiMoreHorizontal, FiSend } from "react-icons/fi";
+import {
+  Accordion,
+  Button,
+  Card,
+  Col,
+  FormControl,
+  Image,
+  Modal,
+  Row,
+} from "react-bootstrap";
+import { FiMoreHorizontal, FiSend, FiVideo } from "react-icons/fi";
 import Person from "../Person/Person";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { RiShareForwardLine } from "react-icons/ri";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
+import { MdPhotoCamera } from "react-icons/md";
+import { GrDocument } from "react-icons/gr";
+import ENDPOINTS from "../../api/endpoints";
 
-function PostItem({ post }) {
+function PostItem(props) {
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState(props.post.text);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const useStyles = createUseStyles((theme) => ({
+    buttons: {
+      flex: 0.5,
+    },
+    footer: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+    icons: {
+      fontSize: "20pt",
+    },
+    card: {
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 0,
+      margin: 0,
+      width: "100%",
+      borderLeft: "1px solid lightgrey",
+      minHeight: 80,
+      color: "#283e4a",
+    },
+    textArea: {
+      border: "none",
+      width: "100%",
+      fontSize: 18,
+      "&:focus": {
+        border: "none",
+        outline: "none",
+      },
+      "&:active": {
+        border: "none",
+        outline: "none",
+      },
+    },
     btn: {
       color: "grey",
       fontSize: "16px",
@@ -24,30 +77,111 @@ function PostItem({ post }) {
     },
   }));
   const classes = useStyles();
+  const submitPost = async () => {
+    const Authorization = localStorage.getItem("authorization");
+    const data = new FormData();
+    data.append("props.post", { text });
+    let res = await fetch(`${ENDPOINTS.POSTS}/${props.post._id}`, {
+      method: "PUT",
+      headers: {
+        Authorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) {
+      props.reFetch && props.reFetch();
+      handleClose();
+    } else {
+      props.reFetch && props.reFetch();
+      handleClose();
+    }
+  };
+  const deletePost = async () => {
+    const Authorization = localStorage.getItem("authorization");
+    const data = new FormData();
+    data.append("props.post", { text });
+    let res = await fetch(`${ENDPOINTS.POSTS}/${props.post._id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      props.reFetch && props.reFetch();
+      handleClose();
+    } else {
+      props.reFetch && props.reFetch();
+      handleClose();
+    }
+  };
   return (
     <div>
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormControl
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={"Type your props.post here"}
+            as={"textarea"}
+            className={classes.textArea}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <div className={classes.footer}>
+            <div className={classes.buttons}>
+              <MdPhotoCamera style={{ fontSize: 20, marginRight: "1em" }} />
+              <FiVideo style={{ fontSize: 20, marginRight: "1em" }} />
+              <GrDocument style={{ fontSize: 16, marginRight: "1em" }} />
+            </div>
+            <div>
+              <Button
+                style={{ marginRight: "1em" }}
+                disabled={text.trim().length === 0}
+                variant="secondary"
+                onClick={() => deletePost()}
+              >
+                Delete
+              </Button>
+              <Button
+                disabled={text.trim().length === 0}
+                variant="primary"
+                onClick={() => submitPost()}
+              >
+                Post
+              </Button>
+            </div>
+          </div>
+        </Modal.Footer>
+      </Modal>
       <Paper>
         <Row>
           <Col xs={11}>
-            <Link to={`/users/${post.createdBy._id}`}>
+            <Link to={`/users/${props.post.createdBy._id}`}>
               <Person
-                title={`${post.createdBy.name} ${post.createdBy.lastName}`}
-                image={post.createdBy.image}
-                description={post.createdBy.title}
+                title={`${props.post.createdBy.name} ${props.post.createdBy.lastName}`}
+                image={props.post.createdBy.image}
+                description={props.post.createdBy.title}
               />
             </Link>
           </Col>
-          <Col xs={1}>
-            <FiMoreHorizontal />
-          </Col>
+          {props.user._id === props.post.createdBy._id && (
+            <Col onClick={() => handleShow(true)} xs={1}>
+              <FiMoreHorizontal />
+            </Col>
+          )}
         </Row>
         <Row>
-          <p style={{ padding: 12 }}>{post.text}</p>
+          <p style={{ padding: 12 }}>{props.post.text}</p>
         </Row>
-        {post.image && (
+        {props.post.image && (
           <Image
             style={{ width: "100%", paddingBottom: 20 }}
-            src={post.image}
+            src={props.post.image}
           />
         )}
         <Accordion>

@@ -38,6 +38,7 @@ class Feed extends React.Component {
   };
   render() {
     const { loading, posts, error } = this.state;
+    const { user } = this.props;
     return (
       <>
         <Row>
@@ -47,7 +48,7 @@ class Feed extends React.Component {
           <Col xs={7}>
             <NewPostForm reFetch={this.fetchPosts} />
             {posts.map((post) => (
-              <PostItem post={post} />
+              <PostItem user={user} reFetch={this.fetchPosts} post={post} />
             ))}
           </Col>
           <Col xs={2}></Col>
