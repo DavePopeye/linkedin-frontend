@@ -9,17 +9,21 @@ import {
   Image,
   Modal,
   Row,
+  Form
 } from "react-bootstrap";
 import { FiMoreHorizontal, FiSend, FiVideo } from "react-icons/fi";
 import Person from "../Person/Person";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { RiShareForwardLine } from "react-icons/ri";
+import { MdSend } from "react-icons/md"
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
 import { MdPhotoCamera } from "react-icons/md";
 import { GrDocument } from "react-icons/gr";
 import ENDPOINTS from "../../api/endpoints";
+import Comments from "../Comments/Comment"
+import { BsConeStriped } from "react-icons/bs";
 
 function PostItem(props) {
   const [show, setShow] = useState(false);
@@ -213,12 +217,15 @@ function PostItem(props) {
           </Row>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <>
-                <Row>new comment</Row>
                 <div style={{ maxHeight: 400, overflowY: "scroll" }}>
-                  comments
+                  <Comments comments={props.post.comments}/>
                 </div>
-              </>
+                <Form className='mt-2'>
+                  <Form.Group controlId="exampleForm.ControlTextarea1" style={{position:'relative'}}>
+                    <MdSend style={{position:'absolute', right:'5px', top:'35%', fontSize:'25px', cursor:'pointer'}} />
+                    <Form.Control as="textarea" rows="3" placeholder='Add new comment here of max 200 characters' style={{ borderRadius:'15px'}} maxLength='200' />
+                  </Form.Group>
+                </Form>
             </Card.Body>
           </Accordion.Collapse>
         </Accordion>
