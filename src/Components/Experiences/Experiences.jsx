@@ -22,25 +22,6 @@ class Experiences extends React.Component {
     experience: {},
   };
 
-  componentDidMount = () => {
-    this.fetchexperiences();
-  };
-
-  fetchexperiences = async () => {
-    const Authorization = localStorage.getItem("authorization");
-    const URL = `https://linkedinbackend.herokuapp.com/users/${
-      this.props.id || "me"
-    }/experiences`;
-    let response = await fetch(URL, {
-      method: "GET",
-      headers: new Headers({
-        Authorization,
-        "Content-type": "application/json",
-      }),
-    });
-    let json = await response.json();
-    this.setState({ experiences: json.data });
-  };
   addNewexperience = async () => {
     const Authorization = localStorage.getItem("authorization");
     const { experience } = this.state;
@@ -56,7 +37,7 @@ class Experiences extends React.Component {
     if (res.ok) {
       const { data } = await res.json();
       this.setState({ modalShow: false });
-      this.fetchexperiences();
+      this.props.reFetch && this.props.reFetch();
     } else {
       const { message } = await res.json();
       alert(message);
@@ -76,8 +57,8 @@ class Experiences extends React.Component {
   };
 
   render() {
-    const { experience, experiences } = this.state;
-    const { editable } = this.props;
+    const { experience } = this.state;
+    const { editable, experiences } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
@@ -85,17 +66,17 @@ class Experiences extends React.Component {
             <h4 className="headerStyle">Experiences</h4>
           </Col>
           <Col className="d-flex justify-content-end">
-          {editable && (
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="s"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ modalShow: true })}
-            />
-          )}
-            {experiences && experiences.length > 0 && (
+            {editable && (
+              <FontAwesomeIcon
+                className="ml-auto mr-3"
+                icon={faPlus}
+                size="s"
+                color="#0073b1"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setState({ modalShow: true })}
+              />
+            )}
+            {experiences && (
               <a
                 title={`Download experiences as csv format`}
                 href={`${
@@ -110,9 +91,10 @@ class Experiences extends React.Component {
             )}
           </Col>
         </Row>
-        {experiences && experiences.length > 0 && (
+        {experiences && (
           <ExperiencesList
-            experiences={this.state.experiences}
+            reFetch={this.props.reFetch}
+            experiences={experiences}
             modalShow={this.state.modalShow}
           />
         )}

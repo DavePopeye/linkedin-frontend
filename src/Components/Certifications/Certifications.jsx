@@ -15,12 +15,6 @@ import CertificationList from "./CertificationList";
 import Paper from "../ui/Paper/Paper";
 import ENDPOINTS from "../../api/endpoints";
 
-/*
- *   Experiences => fetchCertifications
- *       CertificationsList => certifications (as props)
- *       AddNewCertifications fetchCertifications (as props)
- *
- * */
 class Certifications extends React.Component {
   state = {
     certifications: [],
@@ -29,27 +23,6 @@ class Certifications extends React.Component {
     certification: {},
   };
 
-  componentDidMount = () => {
-    this.fetchCertifications();
-  };
-
-  fetchCertifications = async () => {
-    const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(
-      `https://linkedinbackend.herokuapp.com/users/${
-        this.props.id || "me"
-      }/certifications`,
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
-    let json = await response.json();
-    this.setState({ certifications: json.data });
-  };
   addNewCertification = async () => {
     const Authorization = localStorage.getItem("authorization");
     const { certification } = this.state;
@@ -68,7 +41,7 @@ class Certifications extends React.Component {
     if (res.ok) {
       const { data } = await res.json();
       this.setState({ modalShow: false });
-      this.fetchCertifications();
+      this.props.reFetch && this.props.reFetch();
     } else {
       const { message } = await res.json();
       alert(message);
@@ -88,7 +61,8 @@ class Certifications extends React.Component {
   };
 
   render() {
-    const { certification, certifications } = this.state;
+    const { certification } = this.state;
+    const { certifications } = this.props;
     const { editable } = this.props;
     return (
       <Paper>
@@ -111,7 +85,8 @@ class Certifications extends React.Component {
         </Row>
         {certifications && certifications.length > 0 && (
           <CertificationList
-            certifications={this.state.certifications}
+            reFetch={this.props.reFetch}
+            certifications={certifications}
             modalShow={this.state.modalShow}
           />
         )}

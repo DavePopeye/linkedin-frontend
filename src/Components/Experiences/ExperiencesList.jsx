@@ -9,7 +9,10 @@ class ExperiencesList extends React.Component {
     return (
       <div>
         {this.props.experiences.map((experience) => (
-          <ExperienceItem experience={experience} />
+          <ExperienceItem
+            reFetch={this.props.reFetch}
+            experience={experience}
+          />
         ))}
       </div>
     );

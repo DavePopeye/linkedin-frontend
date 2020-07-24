@@ -66,9 +66,10 @@ export class MainJumbotron extends Component {
       <>
         <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
-            <img
-              src="https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg"
-              alt=""
+            <Avatar
+              src={user.cover}
+              callBack={this.props.reFetch}
+              updateUrl={`https://linkedinbackend.herokuapp.com/users/${user._id}/cover`}
             />
             <IconContext.Provider value={{ className: "jumbotronCamera" }}>
               <div>

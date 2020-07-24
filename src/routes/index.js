@@ -10,6 +10,7 @@ import Feed from "../pages/Feed/Feed";
 import Profile from "../Components/ProfilePage/ProfilePage/ProfilePage";
 import Ubeyt from "../pages/Ubeyt";
 import OthersProfilePage from "../Components/OthersProfile/ProfilePage/OthersProfilePage";
+import Search from "../pages/Search/Search";
 
 export default [
   {
@@ -64,6 +65,12 @@ export default [
   {
     path: "/users/:id",
     component: OthersProfilePage,
+    layout: MainLayout,
+    exact: true,
+  },
+  {
+    path: "/search/:query",
+    component: Search,
     layout: MainLayout,
     exact: true,
   },
