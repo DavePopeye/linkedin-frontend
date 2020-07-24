@@ -20,32 +20,10 @@ import Paper from "../../ui/Paper/Paper";
 import moment from "moment";
 export class MainJumbotron extends Component {
   state = {
-    data: [],
-
+    data: this.props.user,
     show: false,
     user: "",
   };
-  componentDidMount() {
-    this.fetchData();
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.id !== this.props.id) {
-      this.fetchData();
-    }
-  }
-
-  async fetchData() {
-    const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(`${ENDPOINTS.USERS}/${this.props.id}`, {
-      method: "GET",
-      headers: new Headers({
-        Authorization,
-        "Content-type": "application/json",
-      }),
-    });
-    let parsedJson = await response.json();
-    this.setState({ data: parsedJson.data });
-  }
 
   render() {
     const { editable } = this.props;
@@ -114,14 +92,14 @@ export class MainJumbotron extends Component {
                 </Dropdown.Menu>
               </Dropdown>
               {editable && (
-              <IconContext.Provider value={{ className: "editIcon" }}>
-                <div>
-                  <RiPencilLine
-                    style={{ cursor: "pointer" }}
-                    onClick={() => this.setState({ showModal: true })}
-                  />
-                </div>
-              </IconContext.Provider>
+                <IconContext.Provider value={{ className: "editIcon" }}>
+                  <div>
+                    <RiPencilLine
+                      style={{ cursor: "pointer" }}
+                      onClick={() => this.setState({ showModal: true })}
+                    />
+                  </div>
+                </IconContext.Provider>
               )}
             </div>
           </div>
@@ -150,11 +128,11 @@ export class MainJumbotron extends Component {
                 <p>See all details</p>
               </div>
               {editable && (
-              <IconContext.Provider value={{ className: "editIcon" }}>
-                <div>
-                  <RiPencilLine />
-                </div>
-              </IconContext.Provider>
+                <IconContext.Provider value={{ className: "editIcon" }}>
+                  <div>
+                    <RiPencilLine />
+                  </div>
+                </IconContext.Provider>
               )}
             </div>
             <div id="presentBelowSection">
@@ -168,11 +146,11 @@ export class MainJumbotron extends Component {
             <p>{this.state.data.bio}</p>
           </div>
           {editable && (
-          <IconContext.Provider value={{ className: "editIcon" }}>
-            <div>
-              <RiPencilLine />
-            </div>
-          </IconContext.Provider>
+            <IconContext.Provider value={{ className: "editIcon" }}>
+              <div>
+                <RiPencilLine />
+              </div>
+            </IconContext.Provider>
           )}
         </Paper>
       </>

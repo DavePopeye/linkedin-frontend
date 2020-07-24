@@ -47,7 +47,7 @@ class ExperienceItem extends Component {
     });
     if (res.ok) {
       const { data } = await res.json();
-      console.log(data);
+      this.props.reFetch && this.props.reFetch();
       this.setState({ modalShow: false });
     } else {
     }
@@ -63,6 +63,7 @@ class ExperienceItem extends Component {
     });
     if (res.ok) {
       this.setState({ modalShow: false });
+      this.props.reFetch && this.props.reFetch();
     } else {
     }
   };

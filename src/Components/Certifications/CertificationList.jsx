@@ -8,7 +8,10 @@ class CertificationList extends React.Component {
     return (
       <div>
         {this.props.certifications.map((certification) => (
-          <CertificationItem certification={certification} />
+          <CertificationItem
+            reFetch={this.props.reFetch}
+            certification={certification}
+          />
         ))}
       </div>
     );

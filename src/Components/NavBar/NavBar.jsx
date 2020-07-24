@@ -17,10 +17,14 @@ import {
 } from "react-icons/ai";
 import { RiBriefcaseLine } from "react-icons/ri";
 import { MdMessage } from "react-icons/md";
-import { IoMdNotificationsOutline, IoIosArrowDropdownCircle } from "react-icons/io";
+import {
+  IoMdNotificationsOutline,
+  IoIosArrowDropdownCircle,
+} from "react-icons/io";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import "./NavBar.css";
 import { Link, withRouter } from "react-router-dom";
+import ENDPOINTS from "../../api/endpoints";
 
 class NavBar extends Component {
   state = {
@@ -29,23 +33,6 @@ class NavBar extends Component {
     curentUser: [],
     show: false,
     image: "",
-  };
-
-  componentDidMount = () => {
-    this.fetchUsers();
-  };
-  fetchUsers = async (callback) => {
-    let response = await fetch("http://linkedinbackend.herokuapp.com/users", {
-      method: "GET",
-      headers: new Headers({
-        Authorization:
-          "Basic c3RyYWhpbmphbGFsb3ZpYzkzQGdtYWlsLmNvbToxMjM0NTY3ODk=",
-        "Content-type": "application/json",
-      }),
-    });
-    let parsedJson = await response.json();
-    this.setState({ users: parsedJson.data });
-    callback && callback();
   };
 
   render() {
@@ -58,77 +45,25 @@ class NavBar extends Component {
       >
         <Container>
           <Navbar.Brand>
-            <Link to='/'>
+            <Link to="/">
               <img
                 src={require("../../Images/linkedin.png")}
                 className="linked"
               />
             </Link>
           </Navbar.Brand>
-          <Form>
-            <Dropdown>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-                style={{ width: "250px", height: "33px" }}
-                onBlur={() => this.setState({ show: false })}
-                onClick={() =>
-                  this.fetchUsers(() => this.setState({ show: true }))
-                }
-                onChange={(e) => {
-                  this.setState({ search: e.target.value.toLowerCase() }, () =>
-                    console.log(this.state.search)
-                  );
-                  if (e.target.value.length >= 1) {
-                    this.setState({ show: true });
-                  } else {
-                    this.setState({ show: false });
-                  }
-                }}
-              />
-              <div style={{ position: "relative", top: "2.5vh" }}>
-                <Dropdown.Menu
-                  style={{ width: "16.5vw" }}
-                  show={this.state.show}
-                >
-                  {this.state.show ? (
-                    this.state.users.map((element) => {
-                      if (
-                        element.name
-                          .toLowerCase()
-                          .includes(this.state.search) ||
-                        element.lastName
-                          .toLowerCase()
-                          .includes(this.state.search)
-                      ) {
-                        return (
-                          
-                            <Dropdown.Item>
-                                <Row>
-                                  <Col xs={3}>
-                                    <Image
-                                      roundedCircle
-                                      style={{ width: "100%" }}
-                                      src={element.image}
-                                    />
-                                  </Col>
-                                  <Col xs={9}>
-                                    {element.name} {element.lastName}
-                                  </Col>
-                                </Row>
-                            </Dropdown.Item>
-                         
-                        );
-                      }
-                    })
-                  ) : (
-                    <Dropdown.Header>Not Found</Dropdown.Header>
-                  )}
-                </Dropdown.Menu>
-              </div>
-            </Dropdown>
-          </Form>
+          <FormControl
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                this.props.history.push(`/search/${e.target.value}`);
+              }
+            }}
+            style={{ width: "250px", height: "33px" }}
+          />
           <Nav className="ml-auto">
             <Link className="nav-link navIcon" to="/">
               <AiOutlineHome style={{ fontSize: "20px" }} />

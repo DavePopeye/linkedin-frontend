@@ -49,10 +49,10 @@ class CertificationItem extends Component {
       }
     );
     if (res.ok) {
-      alert("updated");
       const { data } = await res.json();
       console.log(data);
       this.setState({ modalShow: false });
+      this.props.reFetch && this.props.reFetch();
     } else {
       const msg = await res.json();
       console.log(msg);
@@ -71,10 +71,9 @@ class CertificationItem extends Component {
       }
     );
     if (res.ok) {
-      alert("deleted");
       this.setState({ modalShow: false });
+      this.props.reFetch && this.props.reFetch();
     } else {
-      alert("not deleted");
     }
   };
   render() {

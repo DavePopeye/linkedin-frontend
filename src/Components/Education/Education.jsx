@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Paper from "../ui/Paper/Paper";
 
-export default class educations extends React.Component {
+export default class Educations extends React.Component {
   state = {
     educations: [],
     modalShow: false,
@@ -22,26 +22,8 @@ export default class educations extends React.Component {
     education: {},
   };
 
-  componentDidMount = () => {
-    this.fetchEducations();
-  };
+  componentDidMount = () => {};
 
-  fetchEducations = async () => {
-    const Authorization = localStorage.getItem("authorization");
-    const URL = `https://linkedinbackend.herokuapp.com/users/${
-      this.props.id || "me"
-    }/educations`;
-    let response = await fetch(URL, {
-      method: "GET",
-      headers: new Headers({
-        Authorization,
-        "Content-type": "application/json",
-      }),
-    });
-    let json = await response.json();
-    console.log(json);
-    this.setState({ educations: json.data });
-  };
   addNewEducation = async () => {
     const Authorization = localStorage.getItem("authorization");
     const { education } = this.state;
@@ -57,7 +39,7 @@ export default class educations extends React.Component {
     if (res.ok) {
       const { data } = await res.json();
       this.setState({ modalShow: false });
-      this.fetchEducations();
+      this.props.reFetch && this.props.reFetch();
     } else {
       const { message } = await res.json();
       alert(message);
@@ -76,7 +58,8 @@ export default class educations extends React.Component {
   };
 
   render() {
-    const { educations, education } = this.state;
+    const { education } = this.state;
+    const { educations } = this.props;
     const { editable } = this.props;
     return (
       <Paper>
@@ -97,10 +80,10 @@ export default class educations extends React.Component {
             </Col>
           )}
         </Row>
-        {educations.length > 0 && (
+        {educations && (
           <EducationList
-            reFetch={this.fetchEducations}
-            educations={this.state.educations}
+            reFetch={this.props.reFetch}
+            educations={educations}
             modalShow={this.state.modalShow}
           />
         )}

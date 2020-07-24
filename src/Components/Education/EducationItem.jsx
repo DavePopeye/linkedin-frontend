@@ -67,6 +67,7 @@ class EducationItem extends Component {
     });
     if (res.ok) {
       this.setState({ modalShow: false });
+      this.props.reFetch && this.props.reFetch();
     } else {
     }
   };
