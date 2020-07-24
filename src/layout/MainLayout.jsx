@@ -58,7 +58,7 @@ class MainLayout extends React.Component {
                 reFetch: () => this.fetchActiveUser(),
               })}
             </Container>
-            <Chat />
+            {/* <Chat />*/}
             <Footer />
           </>
         )}
