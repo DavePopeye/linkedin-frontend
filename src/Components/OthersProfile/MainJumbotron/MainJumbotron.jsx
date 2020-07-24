@@ -48,6 +48,7 @@ export class MainJumbotron extends Component {
   }
 
   render() {
+    const { editable } = this.props;
     return (
       <>
         <Paper style={{ paddingBottom: 20 }} noPadding>
@@ -112,6 +113,16 @@ export class MainJumbotron extends Component {
                 <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>*/}
                 </Dropdown.Menu>
               </Dropdown>
+              {editable && (
+              <IconContext.Provider value={{ className: "editIcon" }}>
+                <div>
+                  <RiPencilLine
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.setState({ showModal: true })}
+                  />
+                </div>
+              </IconContext.Provider>
+              )}
             </div>
           </div>
           <div id="profileInfo">
@@ -138,6 +149,13 @@ export class MainJumbotron extends Component {
                 <p>{this.state.data.bio}</p>
                 <p>See all details</p>
               </div>
+              {editable && (
+              <IconContext.Provider value={{ className: "editIcon" }}>
+                <div>
+                  <RiPencilLine />
+                </div>
+              </IconContext.Provider>
+              )}
             </div>
             <div id="presentBelowSection">
               <p>All LinkedIn members</p>
@@ -149,6 +167,13 @@ export class MainJumbotron extends Component {
             <p style={{ fontSize: "24px" }}>About</p>
             <p>{this.state.data.bio}</p>
           </div>
+          {editable && (
+          <IconContext.Provider value={{ className: "editIcon" }}>
+            <div>
+              <RiPencilLine />
+            </div>
+          </IconContext.Provider>
+          )}
         </Paper>
       </>
     );

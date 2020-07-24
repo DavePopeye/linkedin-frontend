@@ -36,7 +36,9 @@ class Certifications extends React.Component {
   fetchCertifications = async () => {
     const Authorization = localStorage.getItem("authorization");
     let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/certifications",
+      `https://linkedinbackend.herokuapp.com/users/${
+        this.props.id || "me"
+      }/certifications`,
       {
         method: "GET",
         headers: new Headers({
@@ -87,6 +89,7 @@ class Certifications extends React.Component {
 
   render() {
     const { certification, certifications } = this.state;
+    const { editable } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
@@ -94,14 +97,16 @@ class Certifications extends React.Component {
             <h4 className="headerStyle">Licenses & Certifications</h4>
           </Col>
           <Col className="d-flex align-items-end">
-            <FontAwesomeIcon
-              className="ml-auto mr-3"
-              icon={faPlus}
-              size="s"
-              color="#0073b1"
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ modalShow: true })}
-            />
+            {editable && (
+              <FontAwesomeIcon
+                className="ml-auto mr-3"
+                icon={faPlus}
+                size="s"
+                color="#0073b1"
+                style={{ cursor: "pointer" }}
+                onClick={() => this.setState({ modalShow: true })}
+              />
+            )}
           </Col>
         </Row>
         {certifications && certifications.length > 0 && (

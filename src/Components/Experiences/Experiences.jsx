@@ -28,16 +28,16 @@ class Experiences extends React.Component {
 
   fetchexperiences = async () => {
     const Authorization = localStorage.getItem("authorization");
-    let response = await fetch(
-      "https://linkedinbackend.herokuapp.com/users/me/experiences",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization,
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    const URL = `https://linkedinbackend.herokuapp.com/users/${
+      this.props.id || "me"
+    }/experiences`;
+    let response = await fetch(URL, {
+      method: "GET",
+      headers: new Headers({
+        Authorization,
+        "Content-type": "application/json",
+      }),
+    });
     let json = await response.json();
     this.setState({ experiences: json.data });
   };
@@ -77,13 +77,15 @@ class Experiences extends React.Component {
 
   render() {
     const { experience, experiences } = this.state;
+    const { editable } = this.props;
     return (
       <Paper>
         <Row className="d-flex align-items-center m-1 my-3 pt-0">
           <Col xs={6}>
             <h4 className="headerStyle">Experiences</h4>
           </Col>
-          <Col className="d-flex align-items-end">
+          <Col className="d-flex justify-content-end">
+          {editable && (
             <FontAwesomeIcon
               className="ml-auto mr-3"
               icon={faPlus}
@@ -92,6 +94,7 @@ class Experiences extends React.Component {
               style={{ cursor: "pointer" }}
               onClick={() => this.setState({ modalShow: true })}
             />
+          )}
             {experiences && experiences.length > 0 && (
               <a
                 title={`Download experiences as csv format`}

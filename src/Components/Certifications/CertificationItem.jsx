@@ -89,16 +89,20 @@ class CertificationItem extends Component {
             <Col xs={7} className="ml-0 pl-0">
               <h6>{certification.name}</h6>
               <p>{certification.organization}</p>
-              <p>{`Credential ID : ${certification.credentialId}`}</p>
-              <Button
-                as={"a"}
-                target={"blank"}
-                href={certification.credentialUrl}
-                variant={"text"}
-                className={"btn btn-text"}
-              >
-                See Credential
-              </Button>
+              {certification.credentialId && (
+                <p>{`Credential ID : ${certification.credentialId}`}</p>
+              )}
+              {certification.credentialUrl && (
+                <Button
+                  as={"a"}
+                  target={"blank"}
+                  href={certification.credentialUrl}
+                  variant={"text"}
+                  className={"btn btn-text"}
+                >
+                  See Credential
+                </Button>
+              )}
             </Col>
             <Col className="d-flex align-items-start">
               <FontAwesomeIcon

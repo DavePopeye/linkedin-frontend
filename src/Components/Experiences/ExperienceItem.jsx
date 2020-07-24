@@ -79,7 +79,8 @@ class ExperienceItem extends Component {
               <h6>{experience.company}</h6>
               <p>{experience.role}</p>
               <p>
-                {experience.startDate} - {experience.endDate}
+                {moment(experience.startDate).format("DD/MM/YYYY")} -{" "}
+                {moment(experience.endDate).format("DD/MM/YYYY")}
               </p>
             </Col>
             <Col className="d-flex align-items-start">

@@ -83,7 +83,8 @@ class EducationItem extends Component {
               <h6>{education.school}</h6>
               <p>{education.fieldOfStudy}</p>
               <p>
-                {education.startDate} - {education.endDate}
+                {moment(education.startDate).format("DD/MM/YYYY")} -{" "}
+                {moment(education.endDate).format("DD/MM/YYYY")}
               </p>
             </Col>
             <Col className="d-flex align-items-start">
