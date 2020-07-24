@@ -19,6 +19,13 @@ class Avatar extends React.Component {
       this.setState({ src });
     }
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.src !== this.props.src) {
+      this.setState({ src: this.props.src });
+    }
+  }
+
   encodeImageFileAsURL(file, callback) {
     const reader = new FileReader();
     reader.onloadend = function () {
@@ -74,7 +81,12 @@ class Avatar extends React.Component {
           type={"file"}
           hidden
         />
-        <Image {...this.props} src={src} onClick={this.toggleModal} />
+        <Image
+          {...this.props}
+          style={{ objectFit: "cover" }}
+          src={src}
+          onClick={this.toggleModal}
+        />
         <Modal centered show={modal} onHide={this.toggleModal}>
           <Modal.Body
             style={{

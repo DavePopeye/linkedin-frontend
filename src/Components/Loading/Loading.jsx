@@ -6,7 +6,7 @@ function Loading(props) {
   return (
     <div
       style={{
-        width: "100vw",
+        width: "100%",
         height: "75vh",
         display: "flex",
         alignItems: "center",
