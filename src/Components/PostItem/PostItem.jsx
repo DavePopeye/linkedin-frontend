@@ -7,6 +7,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { RiShareForwardLine } from "react-icons/ri";
 import { createUseStyles } from "react-jss";
+import { Link } from "react-router-dom";
 
 function PostItem({ post }) {
   const useStyles = createUseStyles((theme) => ({
@@ -28,11 +29,13 @@ function PostItem({ post }) {
       <Paper>
         <Row>
           <Col xs={11}>
-            <Person
-              title={`${post.createdBy.name} ${post.createdBy.lastName}`}
-              image={post.createdBy.image}
-              description={post.createdBy.title}
-            />
+            <Link to={`/users/${post.createdBy._id}`}>
+              <Person
+                title={`${post.createdBy.name} ${post.createdBy.lastName}`}
+                image={post.createdBy.image}
+                description={post.createdBy.title}
+              />
+            </Link>
           </Col>
           <Col xs={1}>
             <FiMoreHorizontal />

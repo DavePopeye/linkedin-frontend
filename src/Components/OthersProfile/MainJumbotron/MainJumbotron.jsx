@@ -31,11 +31,22 @@ export class MainJumbotron extends Component {
       <>
         <Paper style={{ paddingBottom: 20 }} noPadding>
           <div className="bgImage">
-          {this.state.data.cover ? <Image src={`${this.state.data.cover}`} style={{width:'100%'}} alt={`${this.state.data.image}'s image`}
-                  onError={(e)=>{e.target.onerror = null; e.target.src=`https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg`}}/>
-                 :
-                 <Image  src={`https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg`} alt={`${this.state.data.image}'s image`} />
-                 }
+            {this.state.data.cover ? (
+              <Image
+                src={`${this.state.data.cover}`}
+                style={{ width: "100%", objectFit: "cover" }}
+                alt={`${this.state.data.image}'s image`}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg`;
+                }}
+              />
+            ) : (
+              <Image
+                src={`https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg`}
+                alt={`${this.state.data.image}'s image`}
+              />
+            )}
             <IconContext.Provider value={{ className: "jumbotronCamera" }}>
               <div>
                 <FaCamera />
