@@ -1,6 +1,11 @@
 import React from "react";
 import ENDPOINTS from "../../api/endpoints";
 import Loading from "../../Components/Loading/Loading";
+import Paper from "../../Components/ui/Paper/Paper";
+import { Row, Col, Image, Button } from "react-bootstrap";
+import "./Search.css"
+import {Link} from 'react-router-dom';
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -40,11 +45,31 @@ class Search extends React.Component {
         {loading ? (
           <Loading />
         ) : (
-          <div>
+          <Paper>
+            <div>Showing {results.length} results</div>
             {results.map((user) => (
-              <div>{user.name}</div>
-            ))}
-          </div>
+                <Row className='my-3'>
+                  <Col className='col-1 py-2'>
+                  {user.image ? <Image src={`${user.image}`} style={{width:'100%'}} alt={`${user.image}'s image`} roundedCircle 
+                  onError={(e)=>{e.target.onerror = null; e.target.src=`https://api.adorable.io/avatars/${user.name}`}}/>
+                 :
+                 <Image  src={`https://api.adorable.io/avatars/${user.name}`}  style={{width: '100%'}} alt={`${user.image}'s image`} roundedCircle />
+                 }
+                  </Col>
+                  <Col className='col-11 d-flex justify-content-between align-items-center' style={{borderBottom:'1px solid #dbdbdb'}}>
+                    <div className='mb-3'>
+                      <Link className='name' to={`/users/${user._id}`}>{user.name} {user.lastName}</Link>
+                      <div className='work'>{user.experiences[0].role} at {user.experiences[0].company}</div>
+                      <div className='area'>{user.experiences[0].area}</div>
+                    </div>
+                    <div>
+                      <Button className='button' variant="outline-primary">Connect</Button>
+                    </div>
+
+                  </Col>
+                </Row>
+              ))}
+          </Paper>
         )}
       </div>
     );
