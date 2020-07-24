@@ -7,7 +7,7 @@ import { createUseStyles } from "react-jss";
 import ENDPOINTS from "../../api/endpoints";
 import Paper from "../ui/Paper/Paper";
 import { BsCameraVideoFill, FaFile, FiEdit } from "react-icons/all";
-export default function NewPostForm() {
+export default function NewPostForm(props) {
   const [show, setShow] = useState(false);
   const [text, setText] = useState("");
   const handleClose = () => setShow(false);
@@ -104,10 +104,10 @@ export default function NewPostForm() {
       body: JSON.stringify({ text }),
     });
     if (res.ok) {
-      alert("posted");
+      props.reFetch && props.reFetch();
       handleClose();
     } else {
-      alert("error");
+      props.reFetch && props.reFetch();
       handleClose();
     }
   };

@@ -44,7 +44,7 @@ function MiniProfile(props) {
                 height: "95px",
               }}
               variant="top"
-              src="https://miro.medium.com/max/1124/1*92adf06PCF91kCYu1nPLQg.jpeg"
+              src={props.user.cover}
             />
             <Card.Img
               onClick={() => props.history.push("/me")}

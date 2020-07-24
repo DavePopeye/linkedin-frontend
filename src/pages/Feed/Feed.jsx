@@ -4,6 +4,7 @@ import { Col, Row } from "react-bootstrap";
 import NewPost from "../../Components/Posts/NewPost";
 import PostItem from "../../Components/PostItem/PostItem";
 import ENDPOINTS from "../../api/endpoints";
+import NewPostForm from "../../Components/Posts/NewPostForm";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Feed extends React.Component {
             <MiniProfile user={this.props.user} />
           </Col>
           <Col xs={7}>
-            <NewPost reFetch={this.fetchPosts} />
+            <NewPostForm reFetch={this.fetchPosts} />
             {posts.map((post) => (
               <PostItem post={post} />
             ))}
