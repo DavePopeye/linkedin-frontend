@@ -23,7 +23,7 @@ import ENDPOINTS from "../../api/endpoints";
 
 function PostItem(props) {
   const [show, setShow] = useState(false);
-  const [text, setText] = useState(props.post.text);
+  const [text, setText] = useState(props.post.text || "");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const useStyles = createUseStyles((theme) => ({
@@ -126,7 +126,7 @@ function PostItem(props) {
           <FormControl
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={"Type your props.post here"}
+            placeholder={"Type your post here"}
             as={"textarea"}
             className={classes.textArea}
           />
@@ -141,7 +141,6 @@ function PostItem(props) {
             <div>
               <Button
                 style={{ marginRight: "1em" }}
-                disabled={text.trim().length === 0}
                 variant="secondary"
                 onClick={() => deletePost()}
               >

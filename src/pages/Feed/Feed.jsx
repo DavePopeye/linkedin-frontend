@@ -1,10 +1,10 @@
 import React from "react";
 import MiniProfile from "../../Components/MiniProfile/MiniProfile";
 import { Col, Row } from "react-bootstrap";
-import NewPost from "../../Components/Posts/NewPost";
 import PostItem from "../../Components/PostItem/PostItem";
 import ENDPOINTS from "../../api/endpoints";
 import NewPostForm from "../../Components/Posts/NewPostForm";
+import getScrollPercent from "../../utils/scroll";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -13,22 +13,33 @@ class Feed extends React.Component {
       loading: false,
       error: false,
       posts: [],
+      limit: 10,
     };
   }
   componentDidMount() {
     this.fetchPosts();
+    const { limit } = this.state;
+    const that = this;
+    window.addEventListener("scroll", () => {
+      let percent = getScrollPercent();
+      if (percent > 75) {
+        that.setState({ limit: limit + 10 });
+        this.fetchPosts();
+      }
+    });
   }
   fetchPosts = async () => {
     const Authorization = await localStorage.getItem("authorization");
-
+    const { limit } = this.state;
     this.setState({ loading: true });
-    const res = await fetch(ENDPOINTS.POSTS, {
+    const res = await fetch(`${ENDPOINTS.POSTS}?limit=${limit}`, {
       headers: {
         Authorization,
       },
     });
     if (res.ok) {
       const { data } = await res.json();
+      console.log(data);
       this.setState({ posts: data, loading: false });
     } else {
       const { message } = await res.json();

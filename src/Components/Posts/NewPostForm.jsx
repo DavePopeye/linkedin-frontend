@@ -106,6 +106,7 @@ export default function NewPostForm(props) {
     if (res.ok) {
       props.reFetch && props.reFetch();
       handleClose();
+      setText("");
     } else {
       props.reFetch && props.reFetch();
       handleClose();
